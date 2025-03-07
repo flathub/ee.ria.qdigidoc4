@@ -111,6 +111,7 @@ modules:
       - --disable-serial
       - --disable-usb
       - --disable-documentation
+      - --disable-polkit
     cleanup:
       - /sbin
     sources:
