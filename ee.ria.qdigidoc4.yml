@@ -111,12 +111,15 @@ modules:
       - --disable-serial
       - --disable-usb
       - --disable-documentation
+      - --disable-polkit
     cleanup:
       - /sbin
     sources:
       - type: archive
-        url: https://github.com/LudovicRousseau/PCSC/archive/refs/tags/2.0.0.tar.gz
-        sha256: 04f5b9d966b2ada91f699f0b968dd716b381b08ae3cf804832c310f65d329066
+        url: https://github.com/LudovicRousseau/PCSC/archive/refs/tags/2.3.1.tar.gz
+        sha256: 7fcb59f66a323f63cf1ab492579a57d899806835c52ba377af9ac57df68bf39b
+      - type: patch
+        path: pcsc-lite/negotiate_protocol.diff
 
   - name: opensc
     cleanup:
