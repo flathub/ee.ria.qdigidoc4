@@ -53,13 +53,6 @@
     <binary>qdigidoc4</binary>
   </provides>
   <releases>
-    <release version="4.7.0" date="2025-01-02">
-      <description>
-        <ul>
-          <li>Code, Text and translation improvements and updates.</li>
-        </ul>
-      </description>
-    </release>
     <release version="4.5.1" date="2024-04-17">
       <description>
         <ul>
