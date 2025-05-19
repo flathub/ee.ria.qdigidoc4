@@ -145,7 +145,7 @@ modules:
       # https://github.com/open-eid/DigiDoc4-Client/wiki/DeveloperTips#building-in-sandboxed-environment
       - type: file
         url: https://ec.europa.eu/tools/lotl/eu-lotl.xml
-        sha256: 804b3408c7c96fd0bbca8041b343d501f935d1eb1aa09818eec9adac000000ab
+        sha256: ea190b7b13e652b577deeb7c19201ffc55ee9c5002e9c94c2f127030f4cc441f
         dest: client
         dest-filename: eu-lotl.xml
       - type: file
@@ -159,12 +159,12 @@ modules:
         dest-filename: TSL.qrc
       - type: file
         url: https://id.eesti.ee/config.json
-        sha256: ff912ef0cb2cb772d7a0337e14f1d29833f0efe4b2ff72b697b1347c497d4376
+        sha256: 0eb3239781628de3b725a88bb1264496368d320f368a7f76f5e2128325981544
         dest: common
         dest-filename: config.json
       - type: file
         url: https://id.eesti.ee/config.rsa
-        sha256: 5b4bb78f505e9662015fb90a1245f4bcbd791504f69f4d0c731bc30f3583df10
+        sha256: 8a8d15bac8c0d6efaf98c9623cbd56f0a5733d41965e8aafa9dfea61e3f12788
         dest: common
         dest-filename: config.rsa
       - type: file
