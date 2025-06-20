@@ -1,7 +1,7 @@
 app-id: ee.ria.qdigidoc4
 command: run.sh
 runtime: org.kde.Platform
-runtime-version: '6.7'
+runtime-version: '6.8'
 sdk: org.kde.Sdk
 rename-icon: qdigidoc4
 rename-mime-file: qdigidoc4.xml
@@ -35,15 +35,15 @@ modules:
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/google/flatbuffers/archive/refs/tags/v24.3.25.zip
-        sha256: e706f5eb6ca8f78e237bf3f7eccffa1c5ec9a96d3c1c938f08dc09aab1884528
+        url: https://github.com/google/flatbuffers/archive/refs/tags/v25.2.10.zip
+        sha256: 75ffbce7d32f8218b5faec86ae2f6397c7ca810605dc710dfa9c146b9df9e3e9
 
   - name: xerces-c
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/apache/xerces-c/archive/refs/tags/v3.2.4.tar.gz
-        sha256: 8dfaa30d6a641bda113625ef65e43c433e8ffd94fadd3b8d39dfe6faf450f26d
+        url: https://github.com/apache/xerces-c/archive/refs/tags/v3.3.0.zip
+        sha256: 8163c005ad4024438fcc8cfa07cbb9db3846abcb7df3f23299a9eab9be28ba62
 
   - name: xalan-c
     buildsystem: cmake-ninja
@@ -69,15 +69,15 @@ modules:
       - /share/vim
     sources:
       - type: archive
-        url: https://github.com/vim/vim/archive/refs/tags/v9.0.1677.tar.gz
-        sha256: c5750a1d47b514d60d59d9956e2953fb1673d1dd797bfec09c1bff721743e55c
+        url: https://github.com/vim/vim/archive/refs/tags/v9.1.1472.tar.gz
+        sha256: 24f95a1c462050d0ccea6a7a9826d6102e8b04fe8c73c57435f5c9fb7474896c
 
   - name: libdigidocpp
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/open-eid/libdigidocpp/releases/download/v4.1.0/libdigidocpp-4.1.0.tar.gz
-        sha256: 958ed454085d59a74b50a476d5ecd47d67355ddbff31685f23f6f2e1bb5cbebf
+        url: https://github.com/open-eid/libdigidocpp/releases/download/v4.2.0/libdigidocpp-4.2.0.tar.gz
+        sha256: 77702a4d3562de5cf3bbd4f0ee9f8a8a535ad10edc2411b06fa56834d2deb241
 
   - name: openldap
     buildsystem: autotools
@@ -94,8 +94,8 @@ modules:
       - /share/man
     sources:
       - type: archive
-        url: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.6.6.tgz
-        sha256: 082e998cf542984d43634442dbe11da860759e510907152ea579bdc42fe39ea0
+        url: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.6.10.tgz
+        sha256: c065f04aad42737aebd60b2fe4939704ac844266bc0aeaa1609f0cad987be516
       - type: script
         dest-filename: autogen.sh
         commands:
@@ -116,8 +116,8 @@ modules:
       - /sbin
     sources:
       - type: archive
-        url: https://github.com/LudovicRousseau/PCSC/archive/refs/tags/2.3.1.tar.gz
-        sha256: 7fcb59f66a323f63cf1ab492579a57d899806835c52ba377af9ac57df68bf39b
+        url: https://github.com/LudovicRousseau/PCSC/archive/refs/tags/2.3.3.tar.gz
+        sha256: 00b667aa71504ed1d39a48ad377de048c70dbe47229e8c48a3239ab62979c70f
       - type: patch
         path: pcsc-lite/negotiate_protocol.diff
 
@@ -126,15 +126,15 @@ modules:
       - /share/applications/org.opensc.notify.desktop
     sources:
       - type: archive
-        url: https://github.com/OpenSC/OpenSC/releases/download/0.23.0/opensc-0.23.0.tar.gz
-        sha256: a4844a6ea03a522ecf35e49659716dacb6be03f7c010a1a583aaf3eb915ed2e0
+        url: https://github.com/OpenSC/OpenSC/releases/download/0.26.1/opensc-0.26.1.tar.gz
+        sha256: f16291a031d86e570394762e9f35eaf2fcbc2337a49910f3feae42d54e1688cb
 
   - name: qdigidoc4
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/open-eid/DigiDoc4-Client/releases/download/v4.7.0/qdigidoc4_4.7.0.4460-2004.tar.xz
-        sha256: 570bd010dedbbea2833d46bb90986a367f4650253949e708372fe50e4b72e824
+        url: https://github.com/open-eid/DigiDoc4-Client/releases/download/v4.8.0/qdigidoc4_4.8.0.4476-2204.tar.xz
+        sha256: 97082928f84e143666646c70006152a986e501c2e11f907a342329d97a5b4c58
       - type: patch
         path: qdigidoc4/QPKCS11.patch
       - type: patch
