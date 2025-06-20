@@ -3,9 +3,13 @@
   <id>ee.ria.qdigidoc4</id>
   <name>DigiDoc4 Client</name>
   <name xml:lang="ee">DigiDoc4 Klient</name>
+  <name xml:lang="ru">DigiDoc4 Клиент</name>
+  <name xml:lang="uk">DigiDoc4 Клієнт</name>
 
   <summary>Estonian ID-card desktop application</summary>
   <summary xml:lang="ee">Eesti ID-tarkvara</summary>
+  <summary xml:lang="ru">Эстонское ID</summary>
+  <summary xml:lang="uk">Естонське ID</summary>
   <categories>
       <category>Office</category>
   </categories>
@@ -46,6 +50,8 @@
       <image>https://github.com/minosimo/qdigidoc-flatpak/assets/19229302/d1e535ce-d86a-4c6b-ab27-b2a8d683b694</image>
       <caption>DigiDoc4 screenshot</caption>
       <caption xml:lang="ee">DigiDoc4 ekraanipilt</caption>
+      <caption xml:lang="ru">DigiDoc4 скриншот</caption>
+      <caption xml:lang="uk">DigiDoc4 скріншот</caption>
     </screenshot>
   </screenshots>
   <icon type="stock">ee.ria.qdigidoc4</icon>
