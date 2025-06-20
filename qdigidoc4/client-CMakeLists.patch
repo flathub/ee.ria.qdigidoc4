@@ -1,22 +1,18 @@
-diff --git a/client/CMakeLists.txt b/client/CMakeLists.txt
-index b2251bc..910b7db 100644
---- a/client/CMakeLists.txt
-+++ b/client/CMakeLists.txt
-@@ -1,17 +1,9 @@
- if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/TSL.qrc)
- 	set(TSL_QRC ${CMAKE_CURRENT_SOURCE_DIR}/TSL.qrc)
+--- qdigidoc4/client/CMakeLists.txt	2025-06-20 17:01:32.259756033 +0300
++++ qdigidoc4/client/CMakeLists-fix.txt	2025-06-20 17:22:59.474823542 +0300
+@@ -9,15 +9,7 @@
  else()
+ 	set(TSL_DIR ${CMAKE_CURRENT_BINARY_DIR})
+ 	list(TRANSFORM TSL_LIST PREPEND ${TSL_DIR}/)
 -	add_executable(TSLDownload TSLDownload.cpp)
--	target_link_libraries(TSLDownload Qt${QT_VERSION_MAJOR}::Network)
+-	target_link_libraries(TSLDownload Qt6::Network)
  	set_target_properties(TSLDownload PROPERTIES AUTOMOC OFF)
- 	get_target_property(qtCore_install_prefix Qt${QT_VERSION_MAJOR}::qmake IMPORTED_LOCATION)
- 	get_filename_component(qtCore_install_prefix ${qtCore_install_prefix} DIRECTORY)
 -	add_custom_command(
--		OUTPUT TSL.qrc
+-		OUTPUT ${TSL_LIST}
 -		DEPENDS TSLDownload
--		COMMAND $<TARGET_FILE:TSLDownload> "${CMAKE_CURRENT_BINARY_DIR}" ${TSL_URL} ${TSL_INCLUDE}
+-		COMMAND $<TARGET_FILE:TSLDownload> ${CMAKE_CURRENT_BINARY_DIR} ${TSL_URL} ${TSL_INCLUDE}
 -		WORKING_DIRECTORY ${qtCore_install_prefix}
 -	)
- 	set(TSL_QRC ${CMAKE_CURRENT_BINARY_DIR}/TSL.qrc)
  endif()
  
+ file(GLOB WIDGETS CONFIGURE_DEPENDS
