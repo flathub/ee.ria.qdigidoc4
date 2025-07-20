@@ -172,6 +172,8 @@ modules:
         sha256: 29e05778ce98b5197963266bdc292af80a9406cccc3fe5ef7ca2b75b1beb34eb
         dest: common
         dest-filename: config.pub
+      - type: patch
+        path: qdigidoc4/common-CMakeLists.patch
       # qdigidoc4 saves files in $TMPDIR before opening them. Since this is inaccessible, we provide a wrapper script,
       # as advised here: https://docs.flatpak.org/en/latest/sandbox-permissions.html#filesystem-access
       - type: script
