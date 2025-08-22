@@ -20,13 +20,30 @@
     <name>Information System Authority of Estonia</name>
     <name xml:lang="ee">Riigi Infosüsteemi Amet</name>
   </developer>
+
+  <keywords>
+    <keyword>Estonia</keyword>
+    <keyword>Smart-ID</keyword>
+    <keyword>Sign</keyword>
+    <keyword>Encrypt</keyword>
+    <keyword>asice</keyword>
+  </keywords>
+
+  <branding>
+    <color type="primary">#113F8E</color>
+  </branding>
+
   <content_rating type="oars-1.1" />
   
   <metadata_license>MIT</metadata_license>
   <project_license>LGPL-2.1-or-later</project_license>
 
-  <url type="homepage">https://github.com/open-eid/DigiDoc4-Client</url>
+  <url type="homepage">https://www.id.ee/</url>
   <url type="bugtracker">https://github.com/open-eid/DigiDoc4-Client/issues</url>
+  <url type="contact">https://www.id.ee/artikkel/vota-meiega-uhendust/</url>
+  <url type="faq">https://www.id.ee/id-abikeskus/</url>
+  <url type="contribute">https://github.com/open-eid/DigiDoc4-Client</url>
+  <url type="vcs-browser">https://github.com/open-eid/DigiDoc4-Client</url>
 
   <translation type="gettext">nautilus-qdigidoc</translation>
   
@@ -63,6 +80,7 @@
   </provides>
   <releases>
     <release version="4.8.2" date="2025-08-22">
+      <url type="details">https://github.com/open-eid/DigiDoc4-Client/releases/tag/v4.8.2</url>
       <description>
         <ul>
           <li>New macOS Quick look plugin</li>
