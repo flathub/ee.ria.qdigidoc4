@@ -111,8 +111,8 @@ modules:
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/open-eid/DigiDoc4-Client/releases/download/v4.8.2/qdigidoc4_4.8.2.5377-2404.tar.xz
-        sha256: 43f7fc442f637baf441ecf47e3fc72afc05ccec24b00025aa6c00bb4f6244312
+        url: https://github.com/open-eid/DigiDoc4-Client/releases/download/v4.8.2/qdigidoc4-4.8.2.5377.tar.gz
+        sha256: 8ef3ce31025624b09f238cb218851714a197f251ee9b44fe1ce8fe3e81d64247
       - type: patch
         path: qdigidoc4/QPKCS11.patch
       - type: file
