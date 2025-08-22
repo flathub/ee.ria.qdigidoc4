@@ -54,8 +54,8 @@ modules:
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/open-eid/libdigidocpp/releases/download/v4.2.1/libdigidocpp_4.2.1.8360-2404.tar.xz
-        sha256: 36c822579ce1d83e7672ae9af02aef3c472b0b18373dc365d56ed2a46512865b
+        url: https://github.com/open-eid/libdigidocpp/archive/refs/tags/v4.2.1.tar.gz
+        sha256: e050fbaf845c90f3fd6df4594530df3cd831f58e3b93eac5e345ffa65b17c2da
 
   - name: openldap
     buildsystem: autotools
