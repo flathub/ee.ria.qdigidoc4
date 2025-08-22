@@ -1,4 +1,5 @@
 .flatpak-builder
 export
-build/
-/repo
+build
+repo
+builddir
