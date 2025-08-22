@@ -69,15 +69,15 @@ modules:
       - /share/vim
     sources:
       - type: archive
-        url: https://github.com/vim/vim/archive/refs/tags/v9.1.1472.tar.gz
-        sha256: 24f95a1c462050d0ccea6a7a9826d6102e8b04fe8c73c57435f5c9fb7474896c
+        url: https://github.com/vim/vim/archive/refs/tags/v9.1.1663.tar.gz
+        sha256: ad9c65b4020b6f9a7640b9df1a86945884ded148e0e5454803b2211512078ed7
 
   - name: libdigidocpp
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/open-eid/libdigidocpp/releases/download/v4.2.0/libdigidocpp-4.2.0.tar.gz
-        sha256: 77702a4d3562de5cf3bbd4f0ee9f8a8a535ad10edc2411b06fa56834d2deb241
+        url: https://github.com/open-eid/libdigidocpp/releases/download/v4.2.1/libdigidocpp_4.2.1.8360-2404.tar.xz
+        sha256: 36c822579ce1d83e7672ae9af02aef3c472b0b18373dc365d56ed2a46512865b
 
   - name: openldap
     buildsystem: autotools
@@ -133,8 +133,8 @@ modules:
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/open-eid/DigiDoc4-Client/releases/download/v4.8.0/qdigidoc4_4.8.0.4476-2204.tar.xz
-        sha256: 97082928f84e143666646c70006152a986e501c2e11f907a342329d97a5b4c58
+        url: https://github.com/open-eid/DigiDoc4-Client/releases/download/v4.8.2/qdigidoc4_4.8.2.5377-2404.tar.xz
+        sha256: 43f7fc442f637baf441ecf47e3fc72afc05ccec24b00025aa6c00bb4f6244312
       - type: patch
         path: qdigidoc4/QPKCS11.patch
       - type: patch
@@ -145,7 +145,7 @@ modules:
       # https://github.com/open-eid/DigiDoc4-Client/wiki/DeveloperTips#building-in-sandboxed-environment
       - type: file
         url: https://ec.europa.eu/tools/lotl/eu-lotl.xml
-        sha256: 9b01dfe2918acfdccfc624e41fb142c40ad8df0e97e100d49164d8c4ec63f8ca
+        sha256: bb231cec463aa19f353b2de88fafc37f1312622a5ed973a626628eb73368d440
         dest: client
         dest-filename: eu-lotl.xml
       - type: file
@@ -159,12 +159,12 @@ modules:
         dest-filename: TSL.qrc
       - type: file
         url: https://id.eesti.ee/config.json
-        sha256: 30d3dfa54230d7c3c9c44e08629ea24bcbac626f5ec647717e46c589b0d9cb21
+        sha256: 5d1011bdee664c2031859c6c1be9f668cb923e1e0b5b96998e2d7c7fda864b10
         dest: common
         dest-filename: config.json
       - type: file
         url: https://id.eesti.ee/config.rsa
-        sha256: 694ba291e2072d440c42482b845b25dee99aa19a3d400d636fd96ed2590bd5c4
+        sha256: fd2c14b30d25d72861f2b8df493bd5b5ba9fd06334c3f6fc5b429d70cc01225f
         dest: common
         dest-filename: config.rsa
       - type: file
