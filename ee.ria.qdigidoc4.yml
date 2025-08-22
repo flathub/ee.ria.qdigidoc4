@@ -1,7 +1,7 @@
 app-id: ee.ria.qdigidoc4
 command: run.sh
 runtime: org.kde.Platform
-runtime-version: '6.7'
+runtime-version: '6.9'
 sdk: org.kde.Sdk
 rename-icon: qdigidoc4
 rename-mime-file: qdigidoc4.xml
@@ -37,7 +37,7 @@ modules:
       - type: archive
         url: https://github.com/google/flatbuffers/archive/refs/tags/v25.2.10.zip
         sha256: 75ffbce7d32f8218b5faec86ae2f6397c7ca810605dc710dfa9c146b9df9e3e9
-        
+
   - name: xmlsec
     buildsystem: autotools
     sources:
