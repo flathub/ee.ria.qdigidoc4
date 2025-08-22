@@ -4,11 +4,13 @@
   <name>DigiDoc4 Client</name>
   <name xml:lang="ee">DigiDoc4 Klient</name>
   <name xml:lang="ru">DigiDoc4 Клиент</name>
+  <name xml:lang="sv">DigiDoc4-klient</name>
   <name xml:lang="uk">DigiDoc4 Клієнт</name>
 
   <summary>Estonian ID-card desktop application</summary>
   <summary xml:lang="ee">Eesti ID-tarkvara</summary>
   <summary xml:lang="ru">Эстонское ID</summary>
+  <summary xml:lang="sv">Estländsk ID-mjukvara</summary>
   <summary xml:lang="uk">Естонське ID</summary>
   <categories>
       <category>Office</category>
@@ -51,6 +53,7 @@
       <caption>DigiDoc4 screenshot</caption>
       <caption xml:lang="ee">DigiDoc4 ekraanipilt</caption>
       <caption xml:lang="ru">DigiDoc4 скриншот</caption>
+      <caption xml:lang="sv">DigiDoc4-skärmbild</caption>
       <caption xml:lang="uk">DigiDoc4 скріншот</caption>
     </screenshot>
   </screenshots>
