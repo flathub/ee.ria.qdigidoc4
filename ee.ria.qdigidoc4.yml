@@ -104,8 +104,17 @@ modules:
       - /share/applications/org.opensc.notify.desktop
     sources:
       - type: archive
-        url: https://github.com/OpenSC/OpenSC/releases/download/0.26.1/opensc-0.26.1.tar.gz
-        sha256: f16291a031d86e570394762e9f35eaf2fcbc2337a49910f3feae42d54e1688cb
+        url: https://github.com/OpenSC/OpenSC/archive/refs/tags/0.26.1.tar.gz
+        sha256: 5c4928bac2786dcaff9b2dfa43cd3de301bd137193a57adfb1a7a555656691ce
+      # Patches by RIA to support the EstEID 2018 and 2025 cards, 
+      # From:  https://installer.id.ee/media/ubuntu/pool/main/o/opensc/opensc_0.26.1-1RIA3.debian.tar.xz
+      - type: patch
+        paths:
+          - opensc/0001-Use-sysconfdir-opensc-for-opensc.conf.patch
+          - opensc/0002-Drop-non-functional-ENABLE_AUTOSTART.patch
+          - opensc/0003-esteid2025.patch
+          - opensc/0004-esteid2018.patch
+          - opensc/0005-fix-pkcs11-register.patch
 
   - name: qdigidoc4
     buildsystem: cmake-ninja
