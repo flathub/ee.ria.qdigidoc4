@@ -1,0 +1,21 @@
+From: Eric Dorland <eric@debian.org>
+Date: Sun, 26 Jan 2020 16:02:17 -0500
+Subject: Use $sysconfdir/opensc for opensc.conf
+
+---
+ src/libopensc/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Index: opensc/src/libopensc/Makefile.am
+===================================================================
+--- opensc.orig/src/libopensc/Makefile.am	2020-12-06 02:35:00.085913924 -0500
++++ opensc/src/libopensc/Makefile.am	2020-12-06 02:35:00.081913968 -0500
+@@ -16,7 +16,7 @@
+ 	card-eoi.h ccid-types.h reader-tr03119.h \
+ 	card-cac-common.h card-cardos-common.h
+ 
+-AM_CPPFLAGS = -D'OPENSC_CONF_PATH="$(sysconfdir)/opensc.conf"' \
++AM_CPPFLAGS = -D'OPENSC_CONF_PATH="$(sysconfdir)/opensc/opensc.conf"' \
+      -D'DEFAULT_SM_MODULE_PATH="$(DEFAULT_SM_MODULE_PATH)"' \
+      -D'DEFAULT_SM_MODULE="$(DEFAULT_SM_MODULE)"' \
+ 	-I$(top_srcdir)/src

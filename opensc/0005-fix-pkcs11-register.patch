@@ -1,0 +1,384 @@
+From 0ccc20f481b179b59d798dc8c41ba154e55811e8 Mon Sep 17 00:00:00 2001
+From: Frank Morgner <frankmorgner@gmail.com>
+Date: Thu, 22 May 2025 15:41:53 +0200
+Subject: [PATCH] pkcs11-register: allow explicitly specifying an app to
+ configure
+
+fixes https://github.com/OpenSC/OpenSC/issues/3404
+---
+ src/tools/pkcs11-register-cmdline.c | 148 +++++++++++++++++++++-------
+ src/tools/pkcs11-register-cmdline.h |  22 ++++-
+ src/tools/pkcs11-register.c         |   8 +-
+ src/tools/pkcs11-register.ggo.in    |  12 ++-
+ 4 files changed, 140 insertions(+), 50 deletions(-)
+
+diff --git a/src/tools/pkcs11-register-cmdline.c b/src/tools/pkcs11-register-cmdline.c
+index 467fd927a..4d5c4daa4 100644
+--- a/src/tools/pkcs11-register-cmdline.c
++++ b/src/tools/pkcs11-register-cmdline.c
+@@ -34,20 +34,20 @@ const char *gengetopt_args_info_versiontext = "";
+ const char *gengetopt_args_info_description = "Install a PKCS#11 module to known applications.";
+ 
+ const char *gengetopt_args_info_help[] = {
+-  "  -h, --help              Print help and exit",
+-  "  -V, --version           Print version and exit",
+-  "  -m, --module=FILENAME   Specify the module to load  (default=`OpenSC's\n                            PKCS#11 module')",
+-  "      --skip-chrome       Don't install module to Chrome  (default=on)",
+-  "      --skip-firefox      Don't install module to Firefox  (default=on)",
+-  "      --skip-thunderbird  Don't install module to Thunderbird  (default=off)",
+-  "      --skip-seamonkey    Don't install module to SeaMonkey  (default=off)",
++  "  -h, --help                   Print help and exit",
++  "  -V, --version                Print version and exit",
++  "  -m, --module=FILENAME        Specify the module to load  (default=`OpenSC's\n                                 PKCS#11 module')",
++  "      --skip-chrome=ENUM       Don't install module to Chrome  (possible\n                                 values=\"on\", \"off\" default=`on')",
++  "      --skip-firefox=ENUM      Don't install module to Firefox  (possible\n                                 values=\"on\", \"off\" default=`on')",
++  "      --skip-thunderbird=ENUM  Don't install module to Thunderbird  (possible\n                                 values=\"on\", \"off\" default=`off')",
++  "      --skip-seamonkey=ENUM    Don't install module to SeaMonkey  (possible\n                                 values=\"on\", \"off\" default=`off')",
+   "\nReport bugs to https://github.com/OpenSC/OpenSC/issues\n\nWritten by Frank Morgner <frankmorgner@gmail.com>",
+     0
+ };
+ 
+ typedef enum {ARG_NO
+-  , ARG_FLAG
+   , ARG_STRING
++  , ARG_ENUM
+ } cmdline_parser_arg_type;
+ 
+ static
+@@ -60,6 +60,11 @@ cmdline_parser_internal (int argc, char **argv, struct gengetopt_args_info *args
+                         struct cmdline_parser_params *params, const char *additional_error);
+ 
+ 
++const char *cmdline_parser_skip_chrome_values[] = {"on", "off", 0}; /*< Possible values for skip-chrome. */
++const char *cmdline_parser_skip_firefox_values[] = {"on", "off", 0}; /*< Possible values for skip-firefox. */
++const char *cmdline_parser_skip_thunderbird_values[] = {"on", "off", 0}; /*< Possible values for skip-thunderbird. */
++const char *cmdline_parser_skip_seamonkey_values[] = {"on", "off", 0}; /*< Possible values for skip-seamonkey. */
++
+ static char *
+ gengetopt_strdup (const char *s);
+ 
+@@ -81,10 +86,14 @@ void clear_args (struct gengetopt_args_info *args_info)
+   FIX_UNUSED (args_info);
+   args_info->module_arg = gengetopt_strdup ("OpenSC's PKCS#11 module");
+   args_info->module_orig = NULL;
+-  args_info->skip_chrome_flag = 1;
+-  args_info->skip_firefox_flag = 1;
+-  args_info->skip_thunderbird_flag = 0;
+-  args_info->skip_seamonkey_flag = 0;
++  args_info->skip_chrome_arg = skip_chrome_arg_on;
++  args_info->skip_chrome_orig = NULL;
++  args_info->skip_firefox_arg = skip_firefox_arg_on;
++  args_info->skip_firefox_orig = NULL;
++  args_info->skip_thunderbird_arg = skip_thunderbird_arg_off;
++  args_info->skip_thunderbird_orig = NULL;
++  args_info->skip_seamonkey_arg = skip_seamonkey_arg_off;
++  args_info->skip_seamonkey_orig = NULL;
+   
+ }
+ 
+@@ -191,19 +200,64 @@ cmdline_parser_release (struct gengetopt_args_info *args_info)
+ 
+   free_string_field (&(args_info->module_arg));
+   free_string_field (&(args_info->module_orig));
++  free_string_field (&(args_info->skip_chrome_orig));
++  free_string_field (&(args_info->skip_firefox_orig));
++  free_string_field (&(args_info->skip_thunderbird_orig));
++  free_string_field (&(args_info->skip_seamonkey_orig));
+   
+   
+ 
+   clear_given (args_info);
+ }
+ 
++/**
++ * @param val the value to check
++ * @param values the possible values
++ * @return the index of the matched value:
++ * -1 if no value matched,
++ * -2 if more than one value has matched
++ */
++static int
++check_possible_values(const char *val, const char *values[])
++{
++  int i, found, last;
++  size_t len;
++
++  if (!val)   /* otherwise strlen() crashes below */
++    return -1; /* -1 means no argument for the option */
++
++  found = last = 0;
++
++  for (i = 0, len = strlen(val); values[i]; ++i)
++    {
++      if (strncmp(val, values[i], len) == 0)
++        {
++          ++found;
++          last = i;
++          if (strlen(values[i]) == len)
++            return i; /* exact macth no need to check more */
++        }
++    }
++
++  if (found == 1) /* one match: OK */
++    return last;
++
++  return (found ? -2 : -1); /* return many values or none matched */
++}
++
+ 
+ static void
+ write_into_file(FILE *outfile, const char *opt, const char *arg, const char *values[])
+ {
+-  FIX_UNUSED (values);
++  int found = -1;
+   if (arg) {
+-    fprintf(outfile, "%s=\"%s\"\n", opt, arg);
++    if (values) {
++      found = check_possible_values(arg, values);      
++    }
++    if (found >= 0)
++      fprintf(outfile, "%s=\"%s\" # %s\n", opt, arg, values[found]);
++    else
++      fprintf(outfile, "%s=\"%s\"\n", opt, arg);
+   } else {
+     fprintf(outfile, "%s\n", opt);
+   }
+@@ -228,13 +282,13 @@ cmdline_parser_dump(FILE *outfile, struct gengetopt_args_info *args_info)
+   if (args_info->module_given)
+     write_into_file(outfile, "module", args_info->module_orig, 0);
+   if (args_info->skip_chrome_given)
+-    write_into_file(outfile, "skip-chrome", 0, 0 );
++    write_into_file(outfile, "skip-chrome", args_info->skip_chrome_orig, cmdline_parser_skip_chrome_values);
+   if (args_info->skip_firefox_given)
+-    write_into_file(outfile, "skip-firefox", 0, 0 );
++    write_into_file(outfile, "skip-firefox", args_info->skip_firefox_orig, cmdline_parser_skip_firefox_values);
+   if (args_info->skip_thunderbird_given)
+-    write_into_file(outfile, "skip-thunderbird", 0, 0 );
++    write_into_file(outfile, "skip-thunderbird", args_info->skip_thunderbird_orig, cmdline_parser_skip_thunderbird_values);
+   if (args_info->skip_seamonkey_given)
+-    write_into_file(outfile, "skip-seamonkey", 0, 0 );
++    write_into_file(outfile, "skip-seamonkey", args_info->skip_seamonkey_orig, cmdline_parser_skip_seamonkey_values);
+   
+ 
+   i = EXIT_SUCCESS;
+@@ -389,7 +443,18 @@ int update_arg(void *field, char **orig_field,
+       return 1; /* failure */
+     }
+ 
+-  FIX_UNUSED (default_value);
++  if (possible_values && (found = check_possible_values((value ? value : default_value), possible_values)) < 0)
++    {
++      if (short_opt != '-')
++        fprintf (stderr, "%s: %s argument, \"%s\", for option `--%s' (`-%c')%s\n", 
++          package_name, (found == -2) ? "ambiguous" : "invalid", value, long_opt, short_opt,
++          (additional_error ? additional_error : ""));
++      else
++        fprintf (stderr, "%s: %s argument, \"%s\", for option `--%s'%s\n", 
++          package_name, (found == -2) ? "ambiguous" : "invalid", value, long_opt,
++          (additional_error ? additional_error : ""));
++      return 1; /* failure */
++    }
+     
+   if (field_given && *field_given && ! override)
+     return 0;
+@@ -401,8 +466,8 @@ int update_arg(void *field, char **orig_field,
+     val = possible_values[found];
+ 
+   switch(arg_type) {
+-  case ARG_FLAG:
+-    *((int *)field) = !*((int *)field);
++  case ARG_ENUM:
++    if (val) *((int *)field) = found;
+     break;
+   case ARG_STRING:
+     if (val) {
+@@ -421,7 +486,6 @@ int update_arg(void *field, char **orig_field,
+   /* store the original value */
+   switch(arg_type) {
+   case ARG_NO:
+-  case ARG_FLAG:
+     break;
+   default:
+     if (value && orig_field) {
+@@ -485,10 +549,10 @@ cmdline_parser_internal (
+         { "help",	0, NULL, 'h' },
+         { "version",	0, NULL, 'V' },
+         { "module",	1, NULL, 'm' },
+-        { "skip-chrome",	0, NULL, 0 },
+-        { "skip-firefox",	0, NULL, 0 },
+-        { "skip-thunderbird",	0, NULL, 0 },
+-        { "skip-seamonkey",	0, NULL, 0 },
++        { "skip-chrome",	1, NULL, 0 },
++        { "skip-firefox",	1, NULL, 0 },
++        { "skip-thunderbird",	1, NULL, 0 },
++        { "skip-seamonkey",	1, NULL, 0 },
+         { 0,  0, 0, 0 }
+       };
+ 
+@@ -527,9 +591,11 @@ cmdline_parser_internal (
+           {
+           
+           
+-            if (update_arg((void *)&(args_info->skip_chrome_flag), 0, &(args_info->skip_chrome_given),
+-                &(local_args_info.skip_chrome_given), optarg, 0, 0, ARG_FLAG,
+-                check_ambiguity, override, 1, 0, "skip-chrome", '-',
++            if (update_arg( (void *)&(args_info->skip_chrome_arg), 
++                 &(args_info->skip_chrome_orig), &(args_info->skip_chrome_given),
++                &(local_args_info.skip_chrome_given), optarg, cmdline_parser_skip_chrome_values, "on", ARG_ENUM,
++                check_ambiguity, override, 0, 0,
++                "skip-chrome", '-',
+                 additional_error))
+               goto failure;
+           
+@@ -539,9 +605,11 @@ cmdline_parser_internal (
+           {
+           
+           
+-            if (update_arg((void *)&(args_info->skip_firefox_flag), 0, &(args_info->skip_firefox_given),
+-                &(local_args_info.skip_firefox_given), optarg, 0, 0, ARG_FLAG,
+-                check_ambiguity, override, 1, 0, "skip-firefox", '-',
++            if (update_arg( (void *)&(args_info->skip_firefox_arg), 
++                 &(args_info->skip_firefox_orig), &(args_info->skip_firefox_given),
++                &(local_args_info.skip_firefox_given), optarg, cmdline_parser_skip_firefox_values, "on", ARG_ENUM,
++                check_ambiguity, override, 0, 0,
++                "skip-firefox", '-',
+                 additional_error))
+               goto failure;
+           
+@@ -551,9 +619,11 @@ cmdline_parser_internal (
+           {
+           
+           
+-            if (update_arg((void *)&(args_info->skip_thunderbird_flag), 0, &(args_info->skip_thunderbird_given),
+-                &(local_args_info.skip_thunderbird_given), optarg, 0, 0, ARG_FLAG,
+-                check_ambiguity, override, 1, 0, "skip-thunderbird", '-',
++            if (update_arg( (void *)&(args_info->skip_thunderbird_arg), 
++                 &(args_info->skip_thunderbird_orig), &(args_info->skip_thunderbird_given),
++                &(local_args_info.skip_thunderbird_given), optarg, cmdline_parser_skip_thunderbird_values, "off", ARG_ENUM,
++                check_ambiguity, override, 0, 0,
++                "skip-thunderbird", '-',
+                 additional_error))
+               goto failure;
+           
+@@ -563,9 +633,11 @@ cmdline_parser_internal (
+           {
+           
+           
+-            if (update_arg((void *)&(args_info->skip_seamonkey_flag), 0, &(args_info->skip_seamonkey_given),
+-                &(local_args_info.skip_seamonkey_given), optarg, 0, 0, ARG_FLAG,
+-                check_ambiguity, override, 1, 0, "skip-seamonkey", '-',
++            if (update_arg( (void *)&(args_info->skip_seamonkey_arg), 
++                 &(args_info->skip_seamonkey_orig), &(args_info->skip_seamonkey_given),
++                &(local_args_info.skip_seamonkey_given), optarg, cmdline_parser_skip_seamonkey_values, "off", ARG_ENUM,
++                check_ambiguity, override, 0, 0,
++                "skip-seamonkey", '-',
+                 additional_error))
+               goto failure;
+           
+diff --git a/src/tools/pkcs11-register-cmdline.h b/src/tools/pkcs11-register-cmdline.h
+index 8262da3e4..16d5179b3 100644
+--- a/src/tools/pkcs11-register-cmdline.h
++++ b/src/tools/pkcs11-register-cmdline.h
+@@ -34,6 +34,11 @@ extern "C" {
+ #define CMDLINE_PARSER_VERSION VERSION
+ #endif
+ 
++enum enum_skip_chrome { skip_chrome__NULL = -1, skip_chrome_arg_on = 0, skip_chrome_arg_off };
++enum enum_skip_firefox { skip_firefox__NULL = -1, skip_firefox_arg_on = 0, skip_firefox_arg_off };
++enum enum_skip_thunderbird { skip_thunderbird__NULL = -1, skip_thunderbird_arg_on = 0, skip_thunderbird_arg_off };
++enum enum_skip_seamonkey { skip_seamonkey__NULL = -1, skip_seamonkey_arg_on = 0, skip_seamonkey_arg_off };
++
+ /** @brief Where the command line options are stored */
+ struct gengetopt_args_info
+ {
+@@ -42,13 +47,17 @@ struct gengetopt_args_info
+   char * module_arg;	/**< @brief Specify the module to load (default='OpenSC's PKCS#11 module').  */
+   char * module_orig;	/**< @brief Specify the module to load original value given at command line.  */
+   const char *module_help; /**< @brief Specify the module to load help description.  */
+-  int skip_chrome_flag;	/**< @brief Don't install module to Chrome (default=on).  */
++  enum enum_skip_chrome skip_chrome_arg;	/**< @brief Don't install module to Chrome (default='on').  */
++  char * skip_chrome_orig;	/**< @brief Don't install module to Chrome original value given at command line.  */
+   const char *skip_chrome_help; /**< @brief Don't install module to Chrome help description.  */
+-  int skip_firefox_flag;	/**< @brief Don't install module to Firefox (default=on).  */
++  enum enum_skip_firefox skip_firefox_arg;	/**< @brief Don't install module to Firefox (default='on').  */
++  char * skip_firefox_orig;	/**< @brief Don't install module to Firefox original value given at command line.  */
+   const char *skip_firefox_help; /**< @brief Don't install module to Firefox help description.  */
+-  int skip_thunderbird_flag;	/**< @brief Don't install module to Thunderbird (default=off).  */
++  enum enum_skip_thunderbird skip_thunderbird_arg;	/**< @brief Don't install module to Thunderbird (default='off').  */
++  char * skip_thunderbird_orig;	/**< @brief Don't install module to Thunderbird original value given at command line.  */
+   const char *skip_thunderbird_help; /**< @brief Don't install module to Thunderbird help description.  */
+-  int skip_seamonkey_flag;	/**< @brief Don't install module to SeaMonkey (default=off).  */
++  enum enum_skip_seamonkey skip_seamonkey_arg;	/**< @brief Don't install module to SeaMonkey (default='off').  */
++  char * skip_seamonkey_orig;	/**< @brief Don't install module to SeaMonkey original value given at command line.  */
+   const char *skip_seamonkey_help; /**< @brief Don't install module to SeaMonkey help description.  */
+   
+   unsigned int help_given ;	/**< @brief Whether help was given.  */
+@@ -182,6 +191,11 @@ void cmdline_parser_free (struct gengetopt_args_info *args_info);
+ int cmdline_parser_required (struct gengetopt_args_info *args_info,
+   const char *prog_name);
+ 
++extern const char *cmdline_parser_skip_chrome_values[];  /**< @brief Possible values for skip-chrome. */
++extern const char *cmdline_parser_skip_firefox_values[];  /**< @brief Possible values for skip-firefox. */
++extern const char *cmdline_parser_skip_thunderbird_values[];  /**< @brief Possible values for skip-thunderbird. */
++extern const char *cmdline_parser_skip_seamonkey_values[];  /**< @brief Possible values for skip-seamonkey. */
++
+ 
+ #ifdef __cplusplus
+ }
+diff --git a/src/tools/pkcs11-register.c b/src/tools/pkcs11-register.c
+index cfc604d6d..02ecb6b10 100644
+--- a/src/tools/pkcs11-register.c
++++ b/src/tools/pkcs11-register.c
+@@ -332,13 +332,13 @@ main(int argc, char **argv)
+ 		return 1;
+ 	}
+ 
+-	if (!cmdline.skip_chrome_flag)
++	if (cmdline.skip_chrome_arg != skip_chrome_arg_on)
+ 		add_module_chrome(module_path, module_name, exclude_module_path);
+-	if (!cmdline.skip_firefox_flag)
++	if (cmdline.skip_firefox_arg != skip_firefox_arg_on)
+ 		add_module_firefox(module_path, module_name, exclude_module_path);
+-	if (!cmdline.skip_thunderbird_flag)
++	if (cmdline.skip_thunderbird_arg != skip_thunderbird_arg_on)
+ 		add_module_thunderbird(module_path, module_name, exclude_module_path);
+-	if (!cmdline.skip_seamonkey_flag)
++	if (cmdline.skip_seamonkey_arg != skip_seamonkey_arg_on)
+ 		add_module_seamonkey(module_path, module_name, exclude_module_path);
+ 
+ 	cmdline_parser_free (&cmdline);
+diff --git a/src/tools/pkcs11-register.ggo.in b/src/tools/pkcs11-register.ggo.in
+index 39f44c48a..b6e432ea7 100644
+--- a/src/tools/pkcs11-register.ggo.in
++++ b/src/tools/pkcs11-register.ggo.in
+@@ -8,19 +8,23 @@ option "module" m
+ 
+ option "skip-chrome" -
+     "Don't install module to Chrome"
+-    flag @PKCS11_REGISTER_SKIP_FIREFOX@
++    enum values="on","off" optional
++    default="@PKCS11_REGISTER_SKIP_FIREFOX@"
+ 
+ option "skip-firefox" -
+     "Don't install module to Firefox"
+-    flag @PKCS11_REGISTER_SKIP_FIREFOX@
++    enum values="on","off" optional
++    default="@PKCS11_REGISTER_SKIP_FIREFOX@"
+ 
+ option "skip-thunderbird" -
+     "Don't install module to Thunderbird"
+-    flag off
++    enum values="on","off" optional
++    default="off"
+ 
+ option "skip-seamonkey" -
+     "Don't install module to SeaMonkey"
+-    flag off
++    enum values="on","off" optional
++    default="off"
+ 
+ text "
+ Report bugs to @PACKAGE_BUGREPORT@
+-- 
+2.46.0
+

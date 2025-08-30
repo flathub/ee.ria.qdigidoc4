@@ -1,3 +1,6 @@
 .flatpak-builder
 export
-build/
+build
+repo
+builddir
+*.asice

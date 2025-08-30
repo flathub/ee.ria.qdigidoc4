@@ -1,7 +1,7 @@
 app-id: ee.ria.qdigidoc4
 command: run.sh
 runtime: org.kde.Platform
-runtime-version: '6.7'
+runtime-version: '6.9'
 sdk: org.kde.Sdk
 rename-icon: qdigidoc4
 rename-mime-file: qdigidoc4.xml
@@ -35,49 +35,27 @@ modules:
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/google/flatbuffers/archive/refs/tags/v24.3.25.zip
-        sha256: e706f5eb6ca8f78e237bf3f7eccffa1c5ec9a96d3c1c938f08dc09aab1884528
+        url: https://github.com/google/flatbuffers/archive/refs/tags/v25.2.10.zip
+        sha256: 75ffbce7d32f8218b5faec86ae2f6397c7ca810605dc710dfa9c146b9df9e3e9
 
-  - name: xerces-c
-    buildsystem: cmake-ninja
-    sources:
-      - type: archive
-        url: https://github.com/apache/xerces-c/archive/refs/tags/v3.2.4.tar.gz
-        sha256: 8dfaa30d6a641bda113625ef65e43c433e8ffd94fadd3b8d39dfe6faf450f26d
-
-  - name: xalan-c
-    buildsystem: cmake-ninja
-    sources:
-      - type: archive
-        url: https://github.com/apache/xalan-c/releases/download/Xalan-C_1_12_0/xalan_c-1.12.tar.gz
-        sha256: ee7d4b0b08c5676f5e586c7154d94a5b32b299ac3cbb946e24c4375a25552da7
-      - type: patch
-        path: xalan-c/CMakeLists.patch
-
-  - name: xmlsec1-openssl
+  - name: xmlsec
     buildsystem: autotools
     sources:
       - type: archive
         url: https://github.com/lsh123/xmlsec/releases/download/1.3.7/xmlsec1-1.3.7.tar.gz
         sha256: d82e93b69b8aa205a616b62917a269322bf63a3eaafb3775014e61752b2013ea
-
-  - name: xxd
-    buildsystem: simple
-    build-commands:
-      - cd src && make installtools prefix=/app
-    cleanup:
-      - /share/vim
-    sources:
-      - type: archive
-        url: https://github.com/vim/vim/archive/refs/tags/v9.0.1677.tar.gz
-        sha256: c5750a1d47b514d60d59d9956e2953fb1673d1dd797bfec09c1bff721743e55c
+      - type: patch
+        paths:
+          - xmlsec/xmlsec1-1.3.5.legacy.patch
+          - xmlsec/xmlsec1-1.3.7.ecdsa-sig.patch
+          - xmlsec/xmlsec1-1.3.7.rsapss.patch
 
   - name: libdigidocpp
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/open-eid/libdigidocpp/releases/download/v4.1.0/libdigidocpp-4.1.0.tar.gz
-        sha256: 958ed454085d59a74b50a476d5ecd47d67355ddbff31685f23f6f2e1bb5cbebf
+        url: https://github.com/open-eid/libdigidocpp/archive/refs/tags/v4.2.1.tar.gz
+        sha256: e050fbaf845c90f3fd6df4594530df3cd831f58e3b93eac5e345ffa65b17c2da
 
   - name: openldap
     buildsystem: autotools
@@ -94,8 +72,8 @@ modules:
       - /share/man
     sources:
       - type: archive
-        url: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.6.6.tgz
-        sha256: 082e998cf542984d43634442dbe11da860759e510907152ea579bdc42fe39ea0
+        url: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.6.10.tgz
+        sha256: c065f04aad42737aebd60b2fe4939704ac844266bc0aeaa1609f0cad987be516
       - type: script
         dest-filename: autogen.sh
         commands:
@@ -116,8 +94,8 @@ modules:
       - /sbin
     sources:
       - type: archive
-        url: https://github.com/LudovicRousseau/PCSC/archive/refs/tags/2.3.1.tar.gz
-        sha256: 7fcb59f66a323f63cf1ab492579a57d899806835c52ba377af9ac57df68bf39b
+        url: https://github.com/LudovicRousseau/PCSC/archive/refs/tags/2.3.3.tar.gz
+        sha256: 00b667aa71504ed1d39a48ad377de048c70dbe47229e8c48a3239ab62979c70f
       - type: patch
         path: pcsc-lite/negotiate_protocol.diff
 
@@ -126,45 +104,48 @@ modules:
       - /share/applications/org.opensc.notify.desktop
     sources:
       - type: archive
-        url: https://github.com/OpenSC/OpenSC/releases/download/0.23.0/opensc-0.23.0.tar.gz
-        sha256: a4844a6ea03a522ecf35e49659716dacb6be03f7c010a1a583aaf3eb915ed2e0
+        url: https://github.com/OpenSC/OpenSC/archive/refs/tags/0.26.1.tar.gz
+        sha256: 5c4928bac2786dcaff9b2dfa43cd3de301bd137193a57adfb1a7a555656691ce
+      # Patches by RIA to support the EstEID 2018 and 2025 cards, 
+      # From:  https://installer.id.ee/media/ubuntu/pool/main/o/opensc/opensc_0.26.1-1RIA3.debian.tar.xz
+      - type: patch
+        paths:
+          - opensc/0001-Use-sysconfdir-opensc-for-opensc.conf.patch
+          - opensc/0002-Drop-non-functional-ENABLE_AUTOSTART.patch
+          - opensc/0003-esteid2025.patch
+          - opensc/0004-esteid2018.patch
+          - opensc/0005-fix-pkcs11-register.patch
 
   - name: qdigidoc4
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/open-eid/DigiDoc4-Client/releases/download/v4.7.0/qdigidoc4_4.7.0.4460-2004.tar.xz
-        sha256: 570bd010dedbbea2833d46bb90986a367f4650253949e708372fe50e4b72e824
+        url: https://github.com/open-eid/DigiDoc4-Client/releases/download/v4.8.2/qdigidoc4-4.8.2.5377.tar.gz
+        sha256: 8ef3ce31025624b09f238cb218851714a197f251ee9b44fe1ce8fe3e81d64247
       - type: patch
         path: qdigidoc4/QPKCS11.patch
-      - type: patch
-        path: qdigidoc4/client-CMakeLists.patch
       - type: file
         path: ee.ria.qdigidoc4.metainfo.xml
       # See guide for building in a sandboxed environment:
       # https://github.com/open-eid/DigiDoc4-Client/wiki/DeveloperTips#building-in-sandboxed-environment
       - type: file
         url: https://ec.europa.eu/tools/lotl/eu-lotl.xml
-        sha256: ea190b7b13e652b577deeb7c19201ffc55ee9c5002e9c94c2f127030f4cc441f
+        sha256: bb231cec463aa19f353b2de88fafc37f1312622a5ed973a626628eb73368d440
         dest: client
         dest-filename: eu-lotl.xml
       - type: file
         url: https://sr.riik.ee/tsl/estonian-tsl.xml
-        sha256: 245e6261d1d0bb10a65dc4d65d599a54dd611596a0d36bdf8203c85c82a3426a
+        sha256: e35d2b0b56c91e62905e458a4d7921e610f0ec8294dec94c91a59747e0aac0dd
         dest: client
         dest-filename: EE.xml
       - type: file
-        path: qdigidoc4/TSL.qrc
-        dest: client
-        dest-filename: TSL.qrc
-      - type: file
         url: https://id.eesti.ee/config.json
-        sha256: 0eb3239781628de3b725a88bb1264496368d320f368a7f76f5e2128325981544
+        sha256: 5d1011bdee664c2031859c6c1be9f668cb923e1e0b5b96998e2d7c7fda864b10
         dest: common
         dest-filename: config.json
       - type: file
         url: https://id.eesti.ee/config.rsa
-        sha256: 8a8d15bac8c0d6efaf98c9623cbd56f0a5733d41965e8aafa9dfea61e3f12788
+        sha256: fd2c14b30d25d72861f2b8df493bd5b5ba9fd06334c3f6fc5b429d70cc01225f
         dest: common
         dest-filename: config.rsa
       - type: file
@@ -172,8 +153,6 @@ modules:
         sha256: 29e05778ce98b5197963266bdc292af80a9406cccc3fe5ef7ca2b75b1beb34eb
         dest: common
         dest-filename: config.pub
-      - type: patch
-        path: qdigidoc4/common-CMakeLists.patch
       # qdigidoc4 saves files in $TMPDIR before opening them. Since this is inaccessible, we provide a wrapper script,
       # as advised here: https://docs.flatpak.org/en/latest/sandbox-permissions.html#filesystem-access
       - type: script
