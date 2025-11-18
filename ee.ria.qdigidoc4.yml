@@ -118,8 +118,8 @@ modules:
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/open-eid/DigiDoc4-Client/releases/download/v4.9.0/qdigidoc4-4.9.0.tar.gz
-        sha256: 27a789f5107031dfff9df3219db5a0df14b67f1ed9c64d1835af2a858c9e88b7
+        url: https://github.com/open-eid/DigiDoc4-Client/releases/download/v4.9.1/qdigidoc4-4.9.1.tar.gz
+        sha256: 3251616682faa24bb577a492cb206ed84bb79df1002fccec80026a026502f408
       - type: patch
         path: qdigidoc4/QPKCS11.patch
       - type: file
@@ -138,12 +138,12 @@ modules:
         dest-filename: EE.xml
       - type: file
         url: https://id.eesti.ee/config.json
-        sha256: 503469fcced96c6dfc5af5e896ab810466d7803853b8304e86ac07e5e7445a93
+        sha256: 5d17d30ccd52e869f988e56d06d71d4f972078a43d21e3498c9d48cf94565aa0
         dest: common
         dest-filename: config.json
       - type: file
         url: https://id.eesti.ee/config.rsa
-        sha256: a0089228b206768a9909149d0d9bef93008976675ac2da4dbdeb8a35ebff8877
+        sha256: 1ac49d69dc2f6ef675d04c088e86de99e70c220e081acffcffa3e97bb525b941
         dest: common
         dest-filename: config.rsa
       - type: file
