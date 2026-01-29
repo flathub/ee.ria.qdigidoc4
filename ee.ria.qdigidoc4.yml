@@ -35,8 +35,8 @@ modules:
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/google/flatbuffers/archive/refs/tags/v25.9.23.tar.gz
-        sha256: 9102253214dea6ae10c2ac966ea1ed2155d22202390b532d1dea64935c518ada
+        url: https://github.com/google/flatbuffers/archive/refs/tags/v25.12.19.tar.gz
+        sha256: f81c3162b1046fe8b84b9a0dbdd383e24fdbcf88583b9cb6028f90d04d90696a
 
   - name: xmlsec
     buildsystem: autotools
@@ -92,10 +92,8 @@ modules:
       - /sbin
     sources:
       - type: archive
-        url: https://github.com/LudovicRousseau/PCSC/archive/refs/tags/2.4.0.tar.gz
-        sha256: 3d20f3d23c29260fed9195529d30ec3e9f1db60a8a835b4be68716d97751f2e7
-      - type: patch
-        path: pcsc-lite/negotiate_protocol.diff
+        url: https://github.com/LudovicRousseau/PCSC/archive/refs/tags/2.4.1.tar.gz
+        sha256: e7b6737f68c3b9a763fb0b0370d899cea091cced9d762ca8a6032c959576d5be
 
   - name: opensc
     cleanup:
