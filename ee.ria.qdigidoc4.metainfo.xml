@@ -79,6 +79,23 @@
     <binary>qdigidoc4</binary>
   </provides>
   <releases>
+    <release version="4.9.1" date="2026-03-10">
+      <url type="details">https://github.com/open-eid/DigiDoc4-Client/releases/tag/v4.9.1</url>
+      <description>
+        <ul>
+          <li>Version increment for updated packages app stores</li>
+        </ul>
+      </description>
+    </release>
+    <release version="4.9.0" date="2025-11-10">
+      <url type="details">https://github.com/open-eid/DigiDoc4-Client/releases/tag/v4.9.0</url>
+      <description>
+        <ul>
+          <li>Thales card support</li>
+          <li>Code, Text and translation improvements and updates</li>
+        </ul>
+      </description>
+    </release>
     <release version="4.8.2" date="2025-08-22">
       <url type="details">https://github.com/open-eid/DigiDoc4-Client/releases/tag/v4.8.2</url>
       <description>

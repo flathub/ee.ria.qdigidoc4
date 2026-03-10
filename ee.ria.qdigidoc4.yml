@@ -35,27 +35,25 @@ modules:
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/google/flatbuffers/archive/refs/tags/v25.2.10.zip
-        sha256: 75ffbce7d32f8218b5faec86ae2f6397c7ca810605dc710dfa9c146b9df9e3e9
+        url: https://github.com/google/flatbuffers/archive/refs/tags/v25.12.19.tar.gz
+        sha256: f81c3162b1046fe8b84b9a0dbdd383e24fdbcf88583b9cb6028f90d04d90696a
 
   - name: xmlsec
     buildsystem: autotools
     sources:
       - type: archive
-        url: https://github.com/lsh123/xmlsec/releases/download/1.3.7/xmlsec1-1.3.7.tar.gz
-        sha256: d82e93b69b8aa205a616b62917a269322bf63a3eaafb3775014e61752b2013ea
+        url: https://github.com/lsh123/xmlsec/archive/refs/tags/1.3.9.tar.gz
+        sha256: 534f50743b2fa3ebf3c05917a293c73f255c823dd0285f02622260084317c605
       - type: patch
         paths:
           - xmlsec/xmlsec1-1.3.5.legacy.patch
-          - xmlsec/xmlsec1-1.3.7.ecdsa-sig.patch
-          - xmlsec/xmlsec1-1.3.7.rsapss.patch
 
   - name: libdigidocpp
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/open-eid/libdigidocpp/archive/refs/tags/v4.2.1.tar.gz
-        sha256: e050fbaf845c90f3fd6df4594530df3cd831f58e3b93eac5e345ffa65b17c2da
+        url: https://github.com/open-eid/libdigidocpp/archive/refs/tags/v4.3.0.tar.gz
+        sha256: d728d15298a7548f9f481ad746dd0961c9cfd1f7130c3b83f5d89a8eab7cd75d
 
   - name: openldap
     buildsystem: autotools
@@ -94,10 +92,8 @@ modules:
       - /sbin
     sources:
       - type: archive
-        url: https://github.com/LudovicRousseau/PCSC/archive/refs/tags/2.3.3.tar.gz
-        sha256: 00b667aa71504ed1d39a48ad377de048c70dbe47229e8c48a3239ab62979c70f
-      - type: patch
-        path: pcsc-lite/negotiate_protocol.diff
+        url: https://github.com/LudovicRousseau/PCSC/archive/refs/tags/2.4.1.tar.gz
+        sha256: e7b6737f68c3b9a763fb0b0370d899cea091cced9d762ca8a6032c959576d5be
 
   - name: opensc
     cleanup:
@@ -120,8 +116,8 @@ modules:
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/open-eid/DigiDoc4-Client/releases/download/v4.8.2/qdigidoc4-4.8.2.5377.tar.gz
-        sha256: 8ef3ce31025624b09f238cb218851714a197f251ee9b44fe1ce8fe3e81d64247
+        url: https://github.com/open-eid/DigiDoc4-Client/releases/download/v4.9.1/qdigidoc4-4.9.1.tar.gz
+        sha256: 3251616682faa24bb577a492cb206ed84bb79df1002fccec80026a026502f408
       - type: patch
         path: qdigidoc4/QPKCS11.patch
       - type: file
@@ -130,22 +126,22 @@ modules:
       # https://github.com/open-eid/DigiDoc4-Client/wiki/DeveloperTips#building-in-sandboxed-environment
       - type: file
         url: https://ec.europa.eu/tools/lotl/eu-lotl.xml
-        sha256: bb231cec463aa19f353b2de88fafc37f1312622a5ed973a626628eb73368d440
+        sha256: c07d8dea6121cfa36e24ec6a4fd5d3dacc7873e2d2d233e30d1422d0087aec0b
         dest: client
         dest-filename: eu-lotl.xml
       - type: file
         url: https://sr.riik.ee/tsl/estonian-tsl.xml
-        sha256: e35d2b0b56c91e62905e458a4d7921e610f0ec8294dec94c91a59747e0aac0dd
+        sha256: 459f3b9e40d952caac5ecbc9f1c7ef93f1edc1793f8ee821d1854c958a153d3b
         dest: client
         dest-filename: EE.xml
       - type: file
         url: https://id.eesti.ee/config.json
-        sha256: 5d1011bdee664c2031859c6c1be9f668cb923e1e0b5b96998e2d7c7fda864b10
+        sha256: 2f5c6ebb23c7de1a8dad7ad57669693dbfcf4713189ee9f86f76467de8df1d6a
         dest: common
         dest-filename: config.json
       - type: file
         url: https://id.eesti.ee/config.rsa
-        sha256: fd2c14b30d25d72861f2b8df493bd5b5ba9fd06334c3f6fc5b429d70cc01225f
+        sha256: 6eab06d3bc3b01722b10374c1b58cdd5f1078280d943777ebddc16140a32742a
         dest: common
         dest-filename: config.rsa
       - type: file
