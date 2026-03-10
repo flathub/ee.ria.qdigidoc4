@@ -131,17 +131,17 @@ modules:
         dest-filename: eu-lotl.xml
       - type: file
         url: https://sr.riik.ee/tsl/estonian-tsl.xml
-        sha256: aa85b145b871a7f71b11fac14a7a7ca54fae5cdca008ccce1c54dbef86077af1
+        sha256: 459f3b9e40d952caac5ecbc9f1c7ef93f1edc1793f8ee821d1854c958a153d3b
         dest: client
         dest-filename: EE.xml
       - type: file
         url: https://id.eesti.ee/config.json
-        sha256: 9d3b411aab31f7692074b6e218f712dbc9a6893677247d7e2d4b1a7932c4d35b
+        sha256: 2f5c6ebb23c7de1a8dad7ad57669693dbfcf4713189ee9f86f76467de8df1d6a
         dest: common
         dest-filename: config.json
       - type: file
         url: https://id.eesti.ee/config.rsa
-        sha256: db946295931f6ccfc34f8a58f6e5b1343440e0541f833983a277baefd33a5c95
+        sha256: 6eab06d3bc3b01722b10374c1b58cdd5f1078280d943777ebddc16140a32742a
         dest: common
         dest-filename: config.rsa
       - type: file
