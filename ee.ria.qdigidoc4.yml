@@ -77,8 +77,6 @@ modules:
         commands:
           - AUTOMAKE=/bin/true autoreconf -vfi
 
-  - shared-modules/libusb/libusb.json
-
   - name: pcsc-lite
     config-opts:
       - --disable-libudev
