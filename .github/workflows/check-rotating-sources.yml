@@ -1,0 +1,90 @@
+name: Check rotating sources
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Update checksums
+        id: update
+        run: |
+          .github/scripts/update-rotating-sources.sh
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create pull request
+        if: steps.update.outputs.changed == 'true'
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const branch = 'update-rotating-sources';
+
+            const { data: ref } = await github.rest.git.getRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'heads/master',
+            });
+
+            try {
+              await github.rest.git.createRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `refs/heads/${branch}`,
+                sha: ref.object.sha,
+              });
+            } catch {
+              await github.rest.git.updateRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `heads/${branch}`,
+                sha: ref.object.sha,
+                force: true,
+              });
+            }
+
+            const fs = require('fs');
+            const content = fs.readFileSync('ee.ria.qdigidoc4.yml', 'base64');
+
+            const { data: file } = await github.rest.repos.getContent({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              path: 'ee.ria.qdigidoc4.yml',
+              ref: branch,
+            });
+
+            await github.rest.repos.createOrUpdateFileContents({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              path: 'ee.ria.qdigidoc4.yml',
+              message: 'Update rotating source checksums',
+              content,
+              sha: file.sha,
+              branch,
+            });
+
+            const pulls = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              head: `${context.repo.owner}:${branch}`,
+            });
+
+            if (pulls.data.length === 0) {
+              await github.rest.pulls.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: 'Update rotating source checksums',
+                body: 'Automated update of SHA256 checksums for rotating sources.',
+                head: branch,
+                base: 'master',
+              });
+            }
