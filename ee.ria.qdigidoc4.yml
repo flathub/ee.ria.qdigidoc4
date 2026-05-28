@@ -42,18 +42,19 @@ modules:
     buildsystem: autotools
     sources:
       - type: archive
-        url: https://github.com/lsh123/xmlsec/archive/refs/tags/1.3.9.tar.gz
-        sha256: 534f50743b2fa3ebf3c05917a293c73f255c823dd0285f02622260084317c605
+        url: https://github.com/lsh123/xmlsec/archive/refs/tags/1.3.11.tar.gz
+        sha256: bf499efd2f98a31244ad6855f327d7c3f06cc6c6447f0d2fbaea2b0103d47ecb
       - type: patch
         paths:
-          - xmlsec/xmlsec1-1.3.5.legacy.patch
+          # From https://github.com/open-eid/libdigidocpp/blob/master/xmlsec1-1.3.10.legacy.patch
+          - xmlsec/xmlsec1-1.3.10.legacy.patch
 
   - name: libdigidocpp
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/open-eid/libdigidocpp/archive/refs/tags/v4.3.0.tar.gz
-        sha256: d728d15298a7548f9f481ad746dd0961c9cfd1f7130c3b83f5d89a8eab7cd75d
+        url: https://github.com/open-eid/libdigidocpp/archive/refs/tags/v4.4.0.tar.gz
+        sha256: e38c0eafbaf4aa9a7b959b8e2e15ed541e034c15e53ff9bd340749da757f72d8
 
   - name: openldap
     buildsystem: autotools
@@ -70,8 +71,8 @@ modules:
       - /share/man
     sources:
       - type: archive
-        url: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.6.10.tgz
-        sha256: c065f04aad42737aebd60b2fe4939704ac844266bc0aeaa1609f0cad987be516
+        url: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.6.13.tgz
+        sha256: d693b49517a42efb85a1a364a310aed16a53d428d1b46c0d31ef3fba78fcb656
       - type: script
         dest-filename: autogen.sh
         commands:
@@ -116,8 +117,8 @@ modules:
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/open-eid/DigiDoc4-Client/releases/download/v4.9.1/qdigidoc4-4.9.1.tar.gz
-        sha256: 3251616682faa24bb577a492cb206ed84bb79df1002fccec80026a026502f408
+        url: https://github.com/open-eid/DigiDoc4-Client/releases/download/v4.10.0/qdigidoc4-4.10.0.tar.gz
+        sha256: 369c68d7a7ad4c55d57110be6f9cc7df49ff4e06a4f910e673bd8b5f3e2226c8
       - type: patch
         path: qdigidoc4/QPKCS11.patch
       - type: file
