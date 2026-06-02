@@ -1,7 +1,7 @@
 app-id: ee.ria.qdigidoc4
 command: run.sh
 runtime: org.kde.Platform
-runtime-version: '6.9'
+runtime-version: '6.10'
 sdk: org.kde.Sdk
 rename-icon: qdigidoc4
 rename-mime-file: qdigidoc4.xml
@@ -78,25 +78,24 @@ modules:
         commands:
           - AUTOMAKE=/bin/true autoreconf -vfi
 
-  - shared-modules/libusb/libusb.json
-
   - name: pcsc-lite
+    buildsystem: meson
     config-opts:
-      - --disable-libudev
-      - --disable-libsystemd
-      - --without-systemdsystemunitdir
-      - --disable-serial
-      - --disable-usb
-      - --disable-documentation
-      - --disable-polkit
+      - -Dlibudev=false
+      - -Dlibsystemd=false
+      - -Dserial=false
+      - -Dusb=false
+      - -Dpolkit=false
     cleanup:
       - /sbin
     sources:
       - type: archive
-        url: https://github.com/LudovicRousseau/PCSC/archive/refs/tags/2.4.1.tar.gz
-        sha256: e7b6737f68c3b9a763fb0b0370d899cea091cced9d762ca8a6032c959576d5be
+        url: https://github.com/LudovicRousseau/PCSC/archive/refs/tags/2.5.0.tar.gz
+        sha256: 24879115bf502c61ee673d281a68c8578e3e82506f61e4b52ffdb662722f5698
 
   - name: opensc
+    build-options:
+      cflags: -Wno-error=unterminated-string-initialization
     cleanup:
       - /share/applications/org.opensc.notify.desktop
     sources:
