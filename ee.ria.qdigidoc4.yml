@@ -140,15 +140,15 @@ modules:
         dest: common
         dest-filename: config.json
       - type: file
-        url: https://id.eesti.ee/config.rsa
-        sha256: 6eab06d3bc3b01722b10374c1b58cdd5f1078280d943777ebddc16140a32742a
+        url: https://id.eesti.ee/config.ecc
+        sha256: 374a860292eea5f81c79f731b4a706f3c35ec1ea8a59cf2bdc7308376cbb71e6
         dest: common
-        dest-filename: config.rsa
+        dest-filename: config.ecc
       - type: file
-        url: https://id.eesti.ee/config.pub
-        sha256: 29e05778ce98b5197963266bdc292af80a9406cccc3fe5ef7ca2b75b1beb34eb
+        url: https://id.eesti.ee/config.ecpub
+        sha256: 26049d2d34acad69b33fb0dd6eba91a23df6f2b3c1228f5efc16e29a276a8c34
         dest: common
-        dest-filename: config.pub
+        dest-filename: config.ecpub
       # qdigidoc4 saves files in $TMPDIR before opening them. Since this is inaccessible, we provide a wrapper script,
       # as advised here: https://docs.flatpak.org/en/latest/sandbox-permissions.html#filesystem-access
       - type: script
