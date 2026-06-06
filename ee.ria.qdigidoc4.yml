@@ -94,23 +94,21 @@ modules:
         sha256: 24879115bf502c61ee673d281a68c8578e3e82506f61e4b52ffdb662722f5698
 
   - name: opensc
-    build-options:
-      cflags: -Wno-error=unterminated-string-initialization
+    config-opts:
+      # Fix for build error in OpenSC 0.27.1: "install: cannot create regular file '/usr/share/p11-kit/modules/opensc.module': Read-only file system"
+      - --enable-p11_system_config_modules=/etc/pkcs11/modules
     cleanup:
       - /share/applications/org.opensc.notify.desktop
     sources:
       - type: archive
-        url: https://github.com/OpenSC/OpenSC/archive/refs/tags/0.26.1.tar.gz
-        sha256: 5c4928bac2786dcaff9b2dfa43cd3de301bd137193a57adfb1a7a555656691ce
-      # Patches by RIA to support the EstEID 2018 and 2025 cards, 
-      # From:  https://installer.id.ee/media/ubuntu/pool/main/o/opensc/opensc_0.26.1-1RIA3.debian.tar.xz
+        url: https://github.com/OpenSC/OpenSC/archive/refs/tags/0.27.1.tar.gz
+        sha256: 9b72f1b5d92569de67a42bf0edb21ecdc685ad03378343416362a99b90b1fad1
+      # Patches by RIA from:  https://installer.id.ee/media/ubuntu/pool/main/o/opensc/opensc_0.27.1-0RIA2.debian.tar.xz
       - type: patch
         paths:
           - opensc/0001-Use-sysconfdir-opensc-for-opensc.conf.patch
           - opensc/0002-Drop-non-functional-ENABLE_AUTOSTART.patch
-          - opensc/0003-esteid2025.patch
-          - opensc/0004-esteid2018.patch
-          - opensc/0005-fix-pkcs11-register.patch
+          - opensc/0003-pkcs11-register.patch
 
   - name: qdigidoc4
     buildsystem: cmake-ninja
