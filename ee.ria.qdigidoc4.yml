@@ -124,22 +124,22 @@ modules:
       # https://github.com/open-eid/DigiDoc4-Client/wiki/DeveloperTips#building-in-sandboxed-environment
       - type: file
         url: https://ec.europa.eu/tools/lotl/eu-lotl.xml
-        sha256: c07d8dea6121cfa36e24ec6a4fd5d3dacc7873e2d2d233e30d1422d0087aec0b
+        sha256: c3a48c8cbc8007639e31c0b56f26076290dbd43d37980485a4a937e627cabf73
         dest: client
         dest-filename: eu-lotl.xml
       - type: file
         url: https://sr.riik.ee/tsl/estonian-tsl.xml
-        sha256: 459f3b9e40d952caac5ecbc9f1c7ef93f1edc1793f8ee821d1854c958a153d3b
+        sha256: c6b7b872fadcafdd24ad772f7b6649c5c87e3aa27ea44952727ea73d2c435918
         dest: client
         dest-filename: EE.xml
       - type: file
         url: https://id.eesti.ee/config.json
-        sha256: 2f5c6ebb23c7de1a8dad7ad57669693dbfcf4713189ee9f86f76467de8df1d6a
+        sha256: 5b1383a6c4ad52d0f9a9f371213d410f624959e452056234865a066e8357918d
         dest: common
         dest-filename: config.json
       - type: file
         url: https://id.eesti.ee/config.ecc
-        sha256: 374a860292eea5f81c79f731b4a706f3c35ec1ea8a59cf2bdc7308376cbb71e6
+        sha256: 51a3a1703e876d596c8b54462f726dad6509c9f55251251fc41d6336a232b1b0
         dest: common
         dest-filename: config.ecc
       - type: file
