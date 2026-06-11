@@ -1,0 +1,16 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build & Install Flatpak",
+            "type": "shell",
+            "command": "flatpak-builder --force-clean --user --install-deps-from=flathub --repo=repo --install builddir ee.ria.qdigidoc4.yml",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
