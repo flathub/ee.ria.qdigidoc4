@@ -1,0 +1,63 @@
+From 080f804deebb81aba9ec4165dce53bb1bbea3e73 Mon Sep 17 00:00:00 2001
+From: Raul Metsma <raul@metsma.ee>
+Date: Wed, 29 Apr 2026 12:03:57 +0300
+Subject: [PATCH] Add new paths to pkcs11-register
+
+https://bugzilla.mozilla.org/show_bug.cgi?id=259356
+https://issues.chromium.org/issues/40666379
+https://issues.chromium.org/issues/41424903
+
+Signed-off-by: Raul Metsma <raul@metsma.ee>
+---
+ src/tools/pkcs11-register.c          | 16 ++++++++++++++--
+ src/tools/pkcs11-register.desktop.in |  2 --
+ 2 files changed, 14 insertions(+), 4 deletions(-)
+
+diff --git a/src/tools/pkcs11-register.c b/src/tools/pkcs11-register.c
+index 02ecb6b10..20a86213e 100644
+--- a/src/tools/pkcs11-register.c
++++ b/src/tools/pkcs11-register.c
+@@ -230,8 +230,10 @@ add_module_firefox(const char *module_path, const char *module_name, const char
+ #elif defined(_WIN32)
+ 		{"APPDATA", "Mozilla\\Firefox"},
+ #else
+-		{"HOME", ".mozilla/firefox"},
+-		{"HOME", ".mozilla/firefox-esr"},
++			{"XDG_CONFIG_HOME", "mozilla/firefox"}, /* Firefox >= 147 XDG profile */
++			{"HOME", ".config/mozilla/firefox"},	/* XDG default when XDG_CONFIG_HOME unset */
++			{"HOME", ".mozilla/firefox"},
++			{"HOME", ".mozilla/firefox-esr"},
+ #endif
+ 	};
+ 
+@@ -294,6 +296,16 @@ add_module_chrome(const char *module_path, const char *module_name, const char *
+ 				"%s%c%s", home, path_sep, ".pki/nssdb")) {
+ 		add_module_pkcs11_txt(profile_path, module_path, module_name, exclude_module_path);
+ 	}
++
++	/* Chrome M146+ uses XDG_DATA_HOME/pki/nssdb when ~/.pki doesn't exist */
++	const char *xdg_data_home = getenv("XDG_DATA_HOME");
++	if (xdg_data_home && 0 <= snprintf(profile_path, sizeof profile_path,
++						  "%s%c%s", xdg_data_home, path_sep, "pki/nssdb")) {
++		add_module_pkcs11_txt(profile_path, module_path, module_name, exclude_module_path);
++	} else if (home && 0 <= snprintf(profile_path, sizeof profile_path,
++						"%s%c%s", home, path_sep, ".local/share/pki/nssdb")) {
++		add_module_pkcs11_txt(profile_path, module_path, module_name, exclude_module_path);
++	}
+ #endif
+ }
+ 
+diff --git a/src/tools/pkcs11-register.desktop.in b/src/tools/pkcs11-register.desktop.in
+index 0f350d33e..3a2e55907 100644
+--- a/src/tools/pkcs11-register.desktop.in
++++ b/src/tools/pkcs11-register.desktop.in
+@@ -3,6 +3,4 @@ Name=Install OpenSC PKCS#11 module
+ Type=Application
+ Exec=@bindir@/pkcs11-register --skip-chrome=off --skip-firefox=off
+ Categories=Security;System;
+-X-GNOME-AutoRestart=true
+-X-GNOME-Autostart-Phase=Initialization
+ NoDisplay=true
+-- 
+2.46.0
+
