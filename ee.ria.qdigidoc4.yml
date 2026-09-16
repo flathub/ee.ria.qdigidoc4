@@ -37,6 +37,11 @@ modules:
       - type: archive
         url: https://github.com/google/flatbuffers/archive/refs/tags/v25.12.19.tar.gz
         sha256: f81c3162b1046fe8b84b9a0dbdd383e24fdbcf88583b9cb6028f90d04d90696a
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/google/flatbuffers/releases/latest
+          version-query: .tag_name
+          url-query: '"https://github.com/google/flatbuffers/archive/refs/tags/" + .tag_name + ".tar.gz"'
 
   - name: xmlsec
     buildsystem: autotools
@@ -44,6 +49,11 @@ modules:
       - type: archive
         url: https://github.com/lsh123/xmlsec/archive/refs/tags/1.3.12.tar.gz
         sha256: d6e6a758198fe91bcaab584443350df38b68230c93dbfd62843707d217ee114c
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/lsh123/xmlsec/releases/latest
+          version-query: .tag_name
+          url-query: '"https://github.com/lsh123/xmlsec/archive/refs/tags/" + .tag_name + ".tar.gz"'
       - type: patch
         paths:
           # From https://github.com/open-eid/libdigidocpp/blob/master/xmlsec1-1.3.10.legacy.patch
@@ -55,6 +65,11 @@ modules:
       - type: archive
         url: https://github.com/open-eid/libdigidocpp/archive/refs/tags/v4.4.0.tar.gz
         sha256: e38c0eafbaf4aa9a7b959b8e2e15ed541e034c15e53ff9bd340749da757f72d8
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/open-eid/libdigidocpp/releases/latest
+          version-query: .tag_name
+          url-query: '"https://github.com/open-eid/libdigidocpp/archive/refs/tags/" + .tag_name + ".tar.gz"'
 
   - name: openldap
     buildsystem: autotools
@@ -73,6 +88,11 @@ modules:
       - type: archive
         url: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.6.13.tgz
         sha256: d693b49517a42efb85a1a364a310aed16a53d428d1b46c0d31ef3fba78fcb656
+        x-checker-data:
+          type: anitya
+          project-id: 2551
+          url-template: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-$version.tgz
+
       - type: script
         dest-filename: autogen.sh
         commands:
@@ -92,6 +112,11 @@ modules:
       - type: archive
         url: https://github.com/LudovicRousseau/PCSC/archive/refs/tags/2.5.1.tar.gz
         sha256: 78cd514e1b549292696a5c549d42d69a44fd084aa06ccd1af2ff6c2208282581
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/LudovicRousseau/PCSC/releases/latest
+          version-query: .tag_name
+          url-query: '"https://github.com/LudovicRousseau/PCSC/archive/refs/tags/" + .tag_name + ".tar.gz"'
 
   - name: opensc
     config-opts:
@@ -103,6 +128,11 @@ modules:
       - type: archive
         url: https://github.com/OpenSC/OpenSC/archive/refs/tags/0.27.1.tar.gz
         sha256: 9b72f1b5d92569de67a42bf0edb21ecdc685ad03378343416362a99b90b1fad1
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/OpenSC/OpenSC/releases/latest
+          version-query: .tag_name
+          url-query: '"https://github.com/OpenSC/OpenSC/archive/refs/tags/" + .tag_name + ".tar.gz"'
       # Patches by RIA from:  https://installer.id.ee/media/ubuntu/pool/main/o/opensc/opensc_0.27.1-0RIA2.debian.tar.xz
       - type: patch
         paths:
@@ -126,26 +156,41 @@ modules:
         sha256: 24c47f10c2dee1821e811664978511f0ef2129c46644ff0c61b47311dd639616
         dest: client
         dest-filename: eu-lotl.xml
+        x-checker-data:
+          type: rotating-url
+          url: https://ec.europa.eu/tools/lotl/eu-lotl.xml
       - type: file
         url: https://sr.riik.ee/tsl/estonian-tsl.xml
         sha256: c6b7b872fadcafdd24ad772f7b6649c5c87e3aa27ea44952727ea73d2c435918
         dest: client
         dest-filename: EE.xml
+        x-checker-data:
+          type: rotating-url
+          url: https://sr.riik.ee/tsl/estonian-tsl.xml
       - type: file
         url: https://id.eesti.ee/config.json
         sha256: 2d6c7befb868719ced1415891cdb85a9e670083f69dc5e7a5756278b7d4bb032
         dest: common
         dest-filename: config.json
+        x-checker-data:
+          type: rotating-url
+          url: https://id.eesti.ee/config.json
       - type: file
         url: https://id.eesti.ee/config.ecc
         sha256: 5cd66e935ecd628dc89ba0b175d5029c98fc94233b5edbc15388304838ebb8fe
         dest: common
         dest-filename: config.ecc
+        x-checker-data:
+          type: rotating-url
+          url: https://id.eesti.ee/config.ecc
       - type: file
         url: https://id.eesti.ee/config.ecpub
         sha256: 26049d2d34acad69b33fb0dd6eba91a23df6f2b3c1228f5efc16e29a276a8c34
         dest: common
         dest-filename: config.ecpub
+        x-checker-data:
+          type: rotating-url
+          url: https://id.eesti.ee/config.ecpub
       # qdigidoc4 saves files in $TMPDIR before opening them. Since this is inaccessible, we provide a wrapper script,
       # as advised here: https://docs.flatpak.org/en/latest/sandbox-permissions.html#filesystem-access
       - type: script
