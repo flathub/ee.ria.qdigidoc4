@@ -182,7 +182,7 @@ modules:
         dest-filename: config.ecc
         x-checker-data:
           type: rotating-url
-          url: https://id.eesti.ee/config.rsa
+          url: https://id.eesti.ee/config.ecc
       - type: file
         url: https://id.eesti.ee/config.ecpub
         sha256: 26049d2d34acad69b33fb0dd6eba91a23df6f2b3c1228f5efc16e29a276a8c34
@@ -190,7 +190,7 @@ modules:
         dest-filename: config.ecpub
         x-checker-data:
           type: rotating-url
-          url: https://id.eesti.ee/config.pub
+          url: https://id.eesti.ee/config.ecpub
       # qdigidoc4 saves files in $TMPDIR before opening them. Since this is inaccessible, we provide a wrapper script,
       # as advised here: https://docs.flatpak.org/en/latest/sandbox-permissions.html#filesystem-access
       - type: script
