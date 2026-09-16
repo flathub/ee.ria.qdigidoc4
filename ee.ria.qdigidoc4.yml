@@ -42,8 +42,8 @@ modules:
     buildsystem: autotools
     sources:
       - type: archive
-        url: https://github.com/lsh123/xmlsec/archive/refs/tags/1.3.11.tar.gz
-        sha256: bf499efd2f98a31244ad6855f327d7c3f06cc6c6447f0d2fbaea2b0103d47ecb
+        url: https://github.com/lsh123/xmlsec/archive/refs/tags/1.3.12.tar.gz
+        sha256: d6e6a758198fe91bcaab584443350df38b68230c93dbfd62843707d217ee114c
       - type: patch
         paths:
           # From https://github.com/open-eid/libdigidocpp/blob/master/xmlsec1-1.3.10.legacy.patch
@@ -108,7 +108,6 @@ modules:
         paths:
           - opensc/0001-Use-sysconfdir-opensc-for-opensc.conf.patch
           - opensc/0002-Drop-non-functional-ENABLE_AUTOSTART.patch
-          - opensc/0003-pkcs11-register.patch
 
   - name: qdigidoc4
     buildsystem: cmake-ninja
