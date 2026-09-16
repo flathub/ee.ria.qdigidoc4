@@ -5,7 +5,7 @@ runtime-version: '6.10'
 sdk: org.kde.Sdk
 rename-icon: qdigidoc4
 rename-mime-file: qdigidoc4.xml
-rename-mime-icons: ["application-x-cdoc","application-vnd.etsi.asic-e+zip"]
+rename-mime-icons: [application-x-cdoc, application-vnd.etsi.asic-e+zip]
 
 finish-args:
   # libdigidocpp stores tsl files here
@@ -35,13 +35,14 @@ modules:
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/google/flatbuffers/archive/refs/tags/v25.12.19.tar.gz
-        sha256: f81c3162b1046fe8b84b9a0dbdd383e24fdbcf88583b9cb6028f90d04d90696a
+        url: https://github.com/google/flatbuffers/archive/refs/tags/v25.12.19-2026-02-06-03fffb2.tar.gz
+        sha256: ccbce58684691de1e7d51f5e87786266b37d06ab66e9dfe2d0ec106fe50aace0
         x-checker-data:
           type: json
           url: https://api.github.com/repos/google/flatbuffers/releases/latest
           version-query: .tag_name
-          url-query: '"https://github.com/google/flatbuffers/archive/refs/tags/" + .tag_name + ".tar.gz"'
+          url-query: '"https://github.com/google/flatbuffers/archive/refs/tags/" +
+            .tag_name + ".tar.gz"'
 
   - name: xmlsec
     buildsystem: autotools
@@ -53,7 +54,8 @@ modules:
           type: json
           url: https://api.github.com/repos/lsh123/xmlsec/releases/latest
           version-query: .tag_name
-          url-query: '"https://github.com/lsh123/xmlsec/archive/refs/tags/" + .tag_name + ".tar.gz"'
+          url-query: '"https://github.com/lsh123/xmlsec/archive/refs/tags/" + .tag_name
+            + ".tar.gz"'
       - type: patch
         paths:
           # From https://github.com/open-eid/libdigidocpp/blob/master/xmlsec1-1.3.10.legacy.patch
@@ -63,13 +65,14 @@ modules:
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/open-eid/libdigidocpp/archive/refs/tags/v4.4.0.tar.gz
-        sha256: e38c0eafbaf4aa9a7b959b8e2e15ed541e034c15e53ff9bd340749da757f72d8
+        url: https://github.com/open-eid/libdigidocpp/archive/refs/tags/v4.5.1.tar.gz
+        sha256: 536ae93e95a19314645703e02c3391cfe52c590526b70daceffa4185eac5a98c
         x-checker-data:
           type: json
           url: https://api.github.com/repos/open-eid/libdigidocpp/releases/latest
           version-query: .tag_name
-          url-query: '"https://github.com/open-eid/libdigidocpp/archive/refs/tags/" + .tag_name + ".tar.gz"'
+          url-query: '"https://github.com/open-eid/libdigidocpp/archive/refs/tags/"
+            + .tag_name + ".tar.gz"'
 
   - name: openldap
     buildsystem: autotools
@@ -86,8 +89,8 @@ modules:
       - /share/man
     sources:
       - type: archive
-        url: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.6.13.tgz
-        sha256: d693b49517a42efb85a1a364a310aed16a53d428d1b46c0d31ef3fba78fcb656
+        url: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.7.1.tgz
+        sha256: 253db80f301258ea69cda1184766d57395b836aaabf41157eb0316eb0fac1341
         x-checker-data:
           type: anitya
           project-id: 2551
@@ -116,7 +119,8 @@ modules:
           type: json
           url: https://api.github.com/repos/LudovicRousseau/PCSC/releases/latest
           version-query: .tag_name
-          url-query: '"https://github.com/LudovicRousseau/PCSC/archive/refs/tags/" + .tag_name + ".tar.gz"'
+          url-query: '"https://github.com/LudovicRousseau/PCSC/archive/refs/tags/"
+            + .tag_name + ".tar.gz"'
 
   - name: opensc
     config-opts:
@@ -132,7 +136,8 @@ modules:
           type: json
           url: https://api.github.com/repos/OpenSC/OpenSC/releases/latest
           version-query: .tag_name
-          url-query: '"https://github.com/OpenSC/OpenSC/archive/refs/tags/" + .tag_name + ".tar.gz"'
+          url-query: '"https://github.com/OpenSC/OpenSC/archive/refs/tags/" + .tag_name
+            + ".tar.gz"'
       # Patches by RIA from:  https://installer.id.ee/media/ubuntu/pool/main/o/opensc/opensc_0.27.1-0RIA2.debian.tar.xz
       - type: patch
         paths:
