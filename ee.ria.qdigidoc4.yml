@@ -1,7 +1,7 @@
 app-id: ee.ria.qdigidoc4
 command: run.sh
 runtime: org.kde.Platform
-runtime-version: '6.10'
+runtime-version: '6.11'
 sdk: org.kde.Sdk
 rename-icon: qdigidoc4
 rename-mime-file: qdigidoc4.xml
@@ -20,6 +20,7 @@ finish-args:
   # Smartcard
   - --socket=pcsc
   - --device=all
+  # Drag-and-drop
   - --filesystem=home
 
 cleanup:
@@ -35,8 +36,8 @@ modules:
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/google/flatbuffers/archive/refs/tags/v25.12.19.tar.gz
-        sha256: f81c3162b1046fe8b84b9a0dbdd383e24fdbcf88583b9cb6028f90d04d90696a
+        url: https://github.com/google/flatbuffers/archive/refs/tags/v25.12.19-2026-02-06-03fffb2.tar.gz
+        sha256: ccbce58684691de1e7d51f5e87786266b37d06ab66e9dfe2d0ec106fe50aace0
         x-checker-data:
           type: json
           url: https://api.github.com/repos/google/flatbuffers/releases/latest
@@ -56,15 +57,15 @@ modules:
           url-query: '"https://github.com/lsh123/xmlsec/archive/refs/tags/" + .tag_name + ".tar.gz"'
       - type: patch
         paths:
-          # From https://github.com/open-eid/libdigidocpp/blob/master/xmlsec1-1.3.10.legacy.patch
-          - xmlsec/xmlsec1-1.3.10.legacy.patch
+          # From https://github.com/open-eid/libdigidocpp/blob/master/xmlsec1-1.3.12.legacy.patch
+          - xmlsec/xmlsec1-1.3.12.legacy.patch
 
   - name: libdigidocpp
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/open-eid/libdigidocpp/archive/refs/tags/v4.4.0.tar.gz
-        sha256: e38c0eafbaf4aa9a7b959b8e2e15ed541e034c15e53ff9bd340749da757f72d8
+        url: https://github.com/open-eid/libdigidocpp/archive/refs/tags/v4.5.1.tar.gz
+        sha256: 536ae93e95a19314645703e02c3391cfe52c590526b70daceffa4185eac5a98c
         x-checker-data:
           type: json
           url: https://api.github.com/repos/open-eid/libdigidocpp/releases/latest
@@ -86,13 +87,12 @@ modules:
       - /share/man
     sources:
       - type: archive
-        url: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.6.13.tgz
-        sha256: d693b49517a42efb85a1a364a310aed16a53d428d1b46c0d31ef3fba78fcb656
+        url: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.7.1.tgz
+        sha256: 253db80f301258ea69cda1184766d57395b836aaabf41157eb0316eb0fac1341
         x-checker-data:
           type: anitya
           project-id: 2551
           url-template: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-$version.tgz
-
       - type: script
         dest-filename: autogen.sh
         commands:
@@ -143,8 +143,13 @@ modules:
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/open-eid/DigiDoc4-Client/releases/download/v4.10.0/qdigidoc4-4.10.0.tar.gz
-        sha256: 369c68d7a7ad4c55d57110be6f9cc7df49ff4e06a4f910e673bd8b5f3e2226c8
+        url: https://github.com/open-eid/DigiDoc4-Client/releases/download/v4.11.1/qdigidoc4-4.11.1.tar.gz
+        sha256: 16d7c37ef14cd15bab8d1bda3e7eb5e78ff29130f983490678aa6cc42d828977
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/open-eid/DigiDoc4-Client/releases/latest
+          version-query: .tag_name | sub("^v"; "")
+          url-query: .assets[] | select(.name == "qdigidoc4-" + $version + ".tar.gz") | .browser_download_url
       - type: patch
         path: qdigidoc4/QPKCS11.patch
       - type: file
@@ -201,5 +206,4 @@ modules:
       - install run.sh "${FLATPAK_DEST}/bin/run.sh"
       - install -Dm644 ee.ria.qdigidoc4.metainfo.xml $FLATPAK_DEST/share/metainfo/ee.ria.qdigidoc4.metainfo.xml
       - ln -s $FLATPAK_DEST/share/locale/et/LC_MESSAGES/nautilus-qdigidoc.mo $FLATPAK_DEST/share/locale/et/nautilus-qdigidoc.mo
-      - ln -s $FLATPAK_DEST/share/locale/ru/LC_MESSAGES/nautilus-qdigidoc.mo $FLATPAK_DEST/share/locale/ru/nautilus-qdigidoc.mo
       - desktop-file-edit --set-key=Exec --set-value="run.sh" /app/share/applications/ee.ria.qdigidoc4.desktop
