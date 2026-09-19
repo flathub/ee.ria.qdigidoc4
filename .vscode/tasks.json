@@ -11,6 +11,11 @@
                 "kind": "build",
                 "isDefault": true
             }
+        },
+        {
+            "label": "Check External Data",
+            "type": "shell",
+            "command": "flatpak run org.flathub.flatpak-external-data-checker ee.ria.qdigidoc4.yml"
         }
     ]
 }
