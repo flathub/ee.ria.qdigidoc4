@@ -164,7 +164,7 @@ modules:
       # https://github.com/open-eid/DigiDoc4-Client/wiki/DeveloperTips#building-in-sandboxed-environment
       - type: file
         url: https://ec.europa.eu/tools/lotl/eu-lotl.xml
-        sha256: 24c47f10c2dee1821e811664978511f0ef2129c46644ff0c61b47311dd639616
+        sha256: 28ba00501a30c86259602e776f527780e76a1029363ac28fa53112ec19648680
         dest: client
         dest-filename: eu-lotl.xml
         x-checker-data:
