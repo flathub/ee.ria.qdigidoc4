@@ -180,7 +180,7 @@ modules:
           url: https://sr.riik.ee/tsl/estonian-tsl.xml
       - type: file
         url: https://id.eesti.ee/config.json
-        sha256: a42ba5145b5a8cf4620498b7505869f8eba6dd46fdf2997b0e31452c86a8dc85
+        sha256: 7854cfd335b2b154c512cd42589dc1504cf9b7a5e0904a0adeab0ef55b8a700f
         dest: common
         dest-filename: config.json
         x-checker-data:
@@ -188,7 +188,7 @@ modules:
           url: https://id.eesti.ee/config.json
       - type: file
         url: https://id.eesti.ee/config.ecc
-        sha256: b9cf991fce46e1c01fa61f822a9a39981c12c0b50f2f0e802051f7a44733b612
+        sha256: 55c4bfc50e762869eea65d7fb5a54be9ddbfa1b305f2c4a22380d0bf36118b9c
         dest: common
         dest-filename: config.ecc
         x-checker-data:
