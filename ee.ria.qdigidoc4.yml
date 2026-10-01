@@ -40,6 +40,7 @@ modules:
         sha256: ccbce58684691de1e7d51f5e87786266b37d06ab66e9dfe2d0ec106fe50aace0
         x-checker-data:
           type: json
+          is-important: true
           url: https://api.github.com/repos/google/flatbuffers/releases/latest
           version-query: .tag_name
           url-query: '"https://github.com/google/flatbuffers/archive/refs/tags/" +
@@ -53,6 +54,7 @@ modules:
         sha256: d6e6a758198fe91bcaab584443350df38b68230c93dbfd62843707d217ee114c
         x-checker-data:
           type: json
+          is-important: true
           url: https://api.github.com/repos/lsh123/xmlsec/releases/latest
           version-query: .tag_name
           url-query: '"https://github.com/lsh123/xmlsec/archive/refs/tags/" + .tag_name
@@ -70,6 +72,7 @@ modules:
         sha256: 536ae93e95a19314645703e02c3391cfe52c590526b70daceffa4185eac5a98c
         x-checker-data:
           type: json
+          is-important: true
           url: https://api.github.com/repos/open-eid/libdigidocpp/releases/latest
           version-query: .tag_name
           url-query: '"https://github.com/open-eid/libdigidocpp/archive/refs/tags/"
@@ -94,6 +97,7 @@ modules:
         sha256: 253db80f301258ea69cda1184766d57395b836aaabf41157eb0316eb0fac1341
         x-checker-data:
           type: anitya
+          is-important: true
           project-id: 2551
           url-template: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-$version.tgz
       - type: script
@@ -117,6 +121,7 @@ modules:
         sha256: ca52f420194cef335114a10ca3b6369b64046f3d61d5b621595e0d487df18ce1
         x-checker-data:
           type: json
+          is-important: true
           url: https://api.github.com/repos/LudovicRousseau/PCSC/releases/latest
           version-query: .tag_name
           url-query: '"https://github.com/LudovicRousseau/PCSC/archive/refs/tags/"
@@ -134,6 +139,7 @@ modules:
         sha256: 9b72f1b5d92569de67a42bf0edb21ecdc685ad03378343416362a99b90b1fad1
         x-checker-data:
           type: json
+          is-important: true
           url: https://api.github.com/repos/OpenSC/OpenSC/releases/latest
           version-query: .tag_name
           url-query: '"https://github.com/OpenSC/OpenSC/archive/refs/tags/" + .tag_name
@@ -152,6 +158,7 @@ modules:
         sha256: 16d7c37ef14cd15bab8d1bda3e7eb5e78ff29130f983490678aa6cc42d828977
         x-checker-data:
           type: json
+          is-main-source: true
           url: https://api.github.com/repos/open-eid/DigiDoc4-Client/releases/latest
           version-query: .tag_name | sub("^v"; "")
           url-query: .assets[] | select(.name == "qdigidoc4-" + $version + ".tar.gz")
@@ -180,7 +187,7 @@ modules:
           url: https://sr.riik.ee/tsl/estonian-tsl.xml
       - type: file
         url: https://id.eesti.ee/config.json
-        sha256: 7854cfd335b2b154c512cd42589dc1504cf9b7a5e0904a0adeab0ef55b8a700f
+        sha256: 6a2ad64964007df76ead6b27543114c9b253685300c82ca4e4073dacb83bcbb8
         dest: common
         dest-filename: config.json
         x-checker-data:
@@ -188,7 +195,7 @@ modules:
           url: https://id.eesti.ee/config.json
       - type: file
         url: https://id.eesti.ee/config.ecc
-        sha256: 55c4bfc50e762869eea65d7fb5a54be9ddbfa1b305f2c4a22380d0bf36118b9c
+        sha256: 88f0f64c12a4cfcd44a5aa705f0c6c4f07e4bed6c778d13da15b1fc0da285c3e
         dest: common
         dest-filename: config.ecc
         x-checker-data:
