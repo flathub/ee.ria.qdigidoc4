@@ -1,0 +1,34 @@
+From 1c8b70f893948ab1e5c6fe856dacd20bebdb311c Mon Sep 17 00:00:00 2001
+From: Frank Morgner <frankmorgner@gmail.com>
+Date: Tue, 19 May 2026 13:05:49 +0200
+Subject: [PATCH] esteid2018: fixed possible Global-buffer-overflow
+
+Attribution
+
+Reported by @arthurscchan Arthur Chan .  This vulnerability was
+discovered by Claude, Anthropic's AI assistant, with OSS-Fuzz fuzzing
+and triaged by Ada Logics manually in collaboration with Anthropic
+Research.
+---
+ src/libopensc/pkcs15-esteid2018.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/src/libopensc/pkcs15-esteid2018.c b/src/libopensc/pkcs15-esteid2018.c
+index 0cddbe21a..48edbdeac 100644
+--- a/src/libopensc/pkcs15-esteid2018.c
++++ b/src/libopensc/pkcs15-esteid2018.c
+@@ -94,6 +94,11 @@ static int sc_pkcs15emu_esteid2018_init(sc_pkcs15_card_t *p15card) {
+ 		cert_info = (struct sc_pkcs15_cert_info *)obj.data;
+ 		if (cert_info && cert_info->path.len > 0) {
+ 			cert_slot = cert_info->path.value[cert_info->path.len - 1] - 1;
++			if (cert_slot != 0 && cert_slot != 1) {
++				/* unknown slot, see `cert_paths` below */
++				r = SC_ERROR_UNKNOWN_DATA_RECEIVED;
++				LOG_TEST_GOTO_ERR(card->ctx, r, "Unknown certificate path");
++			}
+ 		}
+ 
+ 		sc_pkcs15_free_cert_info(cert_info);
+-- 
+2.46.0
+
