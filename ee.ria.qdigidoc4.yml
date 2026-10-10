@@ -144,11 +144,12 @@ modules:
           version-query: .tag_name
           url-query: '"https://github.com/OpenSC/OpenSC/archive/refs/tags/" + .tag_name
             + ".tar.gz"'
-      # Patches by RIA from:  https://installer.id.ee/media/ubuntu/pool/main/o/opensc/opensc_0.27.1-0RIA2.debian.tar.xz
+      # Patches by RIA from:  https://installer.id.ee/media/ubuntu/pool/main/o/opensc/opensc_0.27.1-0RIA3.debian.tar.xz
       - type: patch
         paths:
           - opensc/0001-Use-sysconfdir-opensc-for-opensc.conf.patch
           - opensc/0002-Drop-non-functional-ENABLE_AUTOSTART.patch
+          - opensc/0004-esteid2018-fix.patch
 
   - name: qdigidoc4
     buildsystem: cmake-ninja
