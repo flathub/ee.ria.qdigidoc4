@@ -117,8 +117,8 @@ modules:
       - /sbin
     sources:
       - type: archive
-        url: https://github.com/LudovicRousseau/PCSC/archive/refs/tags/2.5.2.tar.gz
-        sha256: ca52f420194cef335114a10ca3b6369b64046f3d61d5b621595e0d487df18ce1
+        url: https://github.com/LudovicRousseau/PCSC/archive/refs/tags/2.5.3.tar.gz
+        sha256: c00ea09732bb46feb03eccc70d513c3b7922ea61954cfd0c0e691702bf1d579f
         x-checker-data:
           type: json
           is-important: true
@@ -172,7 +172,7 @@ modules:
       # https://github.com/open-eid/DigiDoc4-Client/wiki/DeveloperTips#building-in-sandboxed-environment
       - type: file
         url: https://ec.europa.eu/tools/lotl/eu-lotl.xml
-        sha256: 28ba00501a30c86259602e776f527780e76a1029363ac28fa53112ec19648680
+        sha256: a36d0053df1afa96c88ede817a585b3168afeba84c1984a0e6cc5642453e70e6
         dest: client
         dest-filename: eu-lotl.xml
         x-checker-data:
@@ -188,7 +188,7 @@ modules:
           url: https://sr.riik.ee/tsl/estonian-tsl.xml
       - type: file
         url: https://id.eesti.ee/config.json
-        sha256: 6a2ad64964007df76ead6b27543114c9b253685300c82ca4e4073dacb83bcbb8
+        sha256: 8f59aef4374b7eac20cfe8acf5aecc3cb0e020f11895a0c6325f1181230b1313
         dest: common
         dest-filename: config.json
         x-checker-data:
@@ -196,7 +196,7 @@ modules:
           url: https://id.eesti.ee/config.json
       - type: file
         url: https://id.eesti.ee/config.ecc
-        sha256: 88f0f64c12a4cfcd44a5aa705f0c6c4f07e4bed6c778d13da15b1fc0da285c3e
+        sha256: ae59eea659394d0c65149e76f13986ae97ce8a2da9efaa68cbf200f3eccf79ef
         dest: common
         dest-filename: config.ecc
         x-checker-data:
