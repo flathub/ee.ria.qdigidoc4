@@ -93,8 +93,8 @@ modules:
       - /share/man
     sources:
       - type: archive
-        url: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.7.1.tgz
-        sha256: 253db80f301258ea69cda1184766d57395b836aaabf41157eb0316eb0fac1341
+        url: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.7.2.tgz
+        sha256: aad731aa22118ff327b9b4ddfc4b6f18ef9476586205da88a532e90940b523d2
         x-checker-data:
           type: anitya
           is-important: true
@@ -188,7 +188,7 @@ modules:
           url: https://sr.riik.ee/tsl/estonian-tsl.xml
       - type: file
         url: https://id.eesti.ee/config.json
-        sha256: 8f59aef4374b7eac20cfe8acf5aecc3cb0e020f11895a0c6325f1181230b1313
+        sha256: c4fff70c5ea3f3b43bdafed8a2220a6a4bc37c74f1056d5b50590227de8a38b9
         dest: common
         dest-filename: config.json
         x-checker-data:
@@ -196,7 +196,7 @@ modules:
           url: https://id.eesti.ee/config.json
       - type: file
         url: https://id.eesti.ee/config.ecc
-        sha256: ae59eea659394d0c65149e76f13986ae97ce8a2da9efaa68cbf200f3eccf79ef
+        sha256: 64ed77f949ab30af36c91622098454ceb21cf83f5a6aab35a5ea25d1e71ecfe8
         dest: common
         dest-filename: config.ecc
         x-checker-data:
