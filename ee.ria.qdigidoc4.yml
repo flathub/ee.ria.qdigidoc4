@@ -36,7 +36,8 @@ modules:
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/google/flatbuffers/archive/refs/tags/v25.12.19-2026-02-06-03fffb2.tar.gz
+        url: 
+          https://github.com/google/flatbuffers/archive/refs/tags/v25.12.19-2026-02-06-03fffb2.tar.gz
         sha256: ccbce58684691de1e7d51f5e87786266b37d06ab66e9dfe2d0ec106fe50aace0
         x-checker-data:
           type: json
@@ -50,8 +51,8 @@ modules:
     buildsystem: autotools
     sources:
       - type: archive
-        url: https://github.com/lsh123/xmlsec/archive/refs/tags/1.3.12.tar.gz
-        sha256: d6e6a758198fe91bcaab584443350df38b68230c93dbfd62843707d217ee114c
+        url: https://github.com/lsh123/xmlsec/archive/refs/tags/1.3.13.tar.gz
+        sha256: 66c5940a6a3e3f67d91cb19627ad8783289ad9c074d1ea80eaac045acda853a5
         x-checker-data:
           type: json
           is-important: true
@@ -93,13 +94,15 @@ modules:
       - /share/man
     sources:
       - type: archive
-        url: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.7.2.tgz
+        url: 
+          https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.7.2.tgz
         sha256: aad731aa22118ff327b9b4ddfc4b6f18ef9476586205da88a532e90940b523d2
         x-checker-data:
           type: anitya
           is-important: true
           project-id: 2551
-          url-template: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-$version.tgz
+          url-template: 
+            https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-$version.tgz
       - type: script
         dest-filename: autogen.sh
         commands:
@@ -155,7 +158,8 @@ modules:
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/open-eid/DigiDoc4-Client/releases/download/v4.11.1/qdigidoc4-4.11.1.tar.gz
+        url: 
+          https://github.com/open-eid/DigiDoc4-Client/releases/download/v4.11.1/qdigidoc4-4.11.1.tar.gz
         sha256: 16d7c37ef14cd15bab8d1bda3e7eb5e78ff29130f983490678aa6cc42d828977
         x-checker-data:
           type: json
