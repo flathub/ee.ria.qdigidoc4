@@ -63,6 +63,8 @@ modules:
         paths:
           # From https://github.com/open-eid/libdigidocpp/blob/master/xmlsec1-1.3.12.legacy.patch
           - xmlsec/xmlsec1-1.3.12.legacy.patch
+          # Patch to fix Fortify build issues in 1.3.13, see https://github.com/lsh123/xmlsec/discussions/1395
+          - xmlsec/xmlsec-1.3.13-fortify.patch
 
   - name: libdigidocpp
     buildsystem: cmake-ninja
