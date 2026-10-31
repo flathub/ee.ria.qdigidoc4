@@ -50,21 +50,23 @@ modules:
     buildsystem: autotools
     sources:
       - type: archive
-        url: https://github.com/lsh123/xmlsec/archive/refs/tags/1.3.13.tar.gz
-        sha256: 66c5940a6a3e3f67d91cb19627ad8783289ad9c074d1ea80eaac045acda853a5
+        url: https://github.com/lsh123/xmlsec/releases/download/1.3.13/xmlsec1-1.3.13.tar.gz
+        sha256: 7e500061eed734c55d74c786998e7562e55b1aaa72a2dff8ce3130b4c5b832d5
         x-checker-data:
           type: json
           is-important: true
           url: https://api.github.com/repos/lsh123/xmlsec/releases/latest
           version-query: .tag_name
-          url-query: '"https://github.com/lsh123/xmlsec/archive/refs/tags/" + .tag_name
-            + ".tar.gz"'
+          url-query: '"https://github.com/lsh123/xmlsec/releases/download/" + .tag_name
+            + "/xmlsec1-" + .tag_name + ".tar.gz"'
       - type: patch
         paths:
           # From https://github.com/open-eid/libdigidocpp/blob/master/xmlsec1-1.3.12.legacy.patch
           - xmlsec/xmlsec1-1.3.12.legacy.patch
           # Patch to fix Fortify build issues in 1.3.13, see https://github.com/lsh123/xmlsec/discussions/1395
           - xmlsec/xmlsec-1.3.13-fortify.patch
+          # Treat relative ASiC entry references as local URIs.
+          - xmlsec/xmlsec-1.3.13-relative-uri.patch
 
   - name: libdigidocpp
     buildsystem: cmake-ninja
@@ -79,6 +81,9 @@ modules:
           version-query: .tag_name
           url-query: '"https://github.com/open-eid/libdigidocpp/archive/refs/tags/"
             + .tag_name + ".tar.gz"'
+      - type: patch
+        paths:
+          - libdigidocpp/0001-allow-container-local-signature-references.patch
 
   - name: openldap
     buildsystem: autotools
@@ -153,7 +158,7 @@ modules:
           - opensc/0002-Drop-non-functional-ENABLE_AUTOSTART.patch
           - opensc/0004-esteid2018-fix.patch
 
-  - name: qdigidoc4
+  - name: c
     buildsystem: cmake-ninja
     sources:
       - type: archive

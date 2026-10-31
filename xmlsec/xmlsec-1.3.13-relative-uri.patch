@@ -1,0 +1,22 @@
+diff --git a/src/transforms.c b/src/transforms.c
+--- a/src/transforms.c
++++ b/src/transforms.c
+@@ -251,7 +251,17 @@
+     } else if(xmlStrncmp(uri, BAD_CAST "file://", 7) == 0) {
+         uriType = xmlSecTransformUriTypeLocal;
+     } else {
+-        uriType = xmlSecTransformUriTypeRemote;
++        const xmlChar* p = uri;
++
++        /* Relative references name local resources; keep URI schemes remote. */
++        while((*p != '\0') && (*p != ':') && (*p != '/') && (*p != '?') && (*p != '#')) {
++            ++p;
++        }
++        if((*p == ':') || ((uri[0] == '/') && (uri[1] == '/'))) {
++            uriType = xmlSecTransformUriTypeRemote;
++        } else {
++            uriType = xmlSecTransformUriTypeLocal;
++        }
+     }
+     return(((uriType & type) != 0) ? 1 : 0);
+ }

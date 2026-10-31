@@ -1,0 +1,46 @@
+diff --git a/src/XMLDocument.h b/src/XMLDocument.h
+--- a/src/XMLDocument.h
++++ b/src/XMLDocument.h
+@@ -545,6 +545,7 @@
+         auto ctx = make_unique_ptr<xmlSecDSigCtxDestroy>(xmlSecDSigCtxCreate(mngr.get()));
+         if(!ctx)
+             return false;
++        ctx->enabledReferenceUris |= xmlSecTransformUriTypeLocal;
+         ctx->keyInfoReadCtx.flags |= XMLSEC_KEYINFO_FLAGS_X509DATA_DONT_VERIFY_CERTS;
+         auto pkey = make_unique_ptr<EVP_PKEY_free>(X509_get_pubkey(cert.handle()));
+         if(!pkey) return false;
+diff --git a/src/SignatureXAdES_B.cpp b/src/SignatureXAdES_B.cpp
+--- a/src/SignatureXAdES_B.cpp
++++ b/src/SignatureXAdES_B.cpp
+@@ -37,6 +37,7 @@
+ #include <xmlsec/io.h>
+ #include <xmlsec/errors.h>
+ 
++#include <libxml/uri.h>
+ #include <regex>
+ 
+ using namespace digidoc;
+@@ -154,11 +154,21 @@
+                 return {};
+             }
+ 
+-            auto find = [name](auto files) -> const DataFile* {
++            char *uriName = xmlURIUnescapeString(name, 0, nullptr);
++            if(!uriName)
++            {
++                xmlSecError(__FILE__,__LINE__, "xmlURIUnescapeString", nullptr, nullptr, 0,
++                    "Failed to decode file URI '%s'", name);
++                return {};
++            }
++            string fileName(uriName);
++            xmlFree(uriName);
++
++            auto find = [&fileName](auto files) -> const DataFile* {
+                 for(const DataFile *file: files)
+                 {
+-                    if(file->fileName() == name)
++                    if(file->fileName() == fileName)
+                         return file;
+                 }
+                 return {};
+             };

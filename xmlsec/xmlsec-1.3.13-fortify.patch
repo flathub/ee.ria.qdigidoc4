@@ -21,3 +21,23 @@ diff --git a/configure.ac b/configure.ac
 +                ;;
 +        esac
      fi
+
+diff --git a/configure b/configure
+--- a/configure
++++ b/configure
+@@ -20605,5 +20605,10 @@
+-                case " $CFLAGS " in
+-            *" -O "*|*" -O1 "*|*" -O2 "*|*" -O3 "*|*" -Os "*|*" -Ofast "*|*" -Oz "*)
+-                CFLAGS="$CFLAGS -D_FORTIFY_SOURCE=2"
+-                ;;
+-        esac
++                case " $CPPFLAGS $CFLAGS " in
++            *FORTIFY_SOURCE=*) ;;
++            *)
++                case " $CFLAGS " in
++            *" -O "*|*" -O1 "*|*" -O2 "*|*" -O3 "*|*" -Os "*|*" -Ofast "*|*" -Oz "*)
++                CFLAGS="$CFLAGS -D_FORTIFY_SOURCE=2"
++                ;;
++                esac
++                ;;
++        esac
