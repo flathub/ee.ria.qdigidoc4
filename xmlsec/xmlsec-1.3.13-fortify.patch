@@ -1,0 +1,43 @@
+diff --git a/configure.ac b/configure.ac
+--- a/configure.ac
++++ b/configure.ac
+@@ -2919,8 +2919,13 @@
+     if test "z$build_on_linux" = "zyes" ; then
+-        dnl A bare "-O" means "-O1", so it also satisfies the -O1 requirement.
+-        case " $CFLAGS " in
+-            *" -O "*|*" -O1 "*|*" -O2 "*|*" -O3 "*|*" -Os "*|*" -Ofast "*|*" -Oz "*)
+-                CFLAGS="$CFLAGS -D_FORTIFY_SOURCE=2"
+-                ;;
+-        esac
++        case " $CPPFLAGS $CFLAGS " in
++            *FORTIFY_SOURCE=*) ;;
++            *)
++                dnl A bare "-O" means "-O1", so it also satisfies the -O1 requirement.
++                case " $CFLAGS " in
++                    *" -O "*|*" -O1 "*|*" -O2 "*|*" -O3 "*|*" -Os "*|*" -Ofast "*|*" -Oz "*)
++                        CFLAGS="$CFLAGS -D_FORTIFY_SOURCE=2"
++                        ;;
++                esac
++                ;;
++        esac
+     fi
+
+diff --git a/configure b/configure
+--- a/configure
++++ b/configure
+@@ -20605,5 +20605,10 @@
+-                case " $CFLAGS " in
+-            *" -O "*|*" -O1 "*|*" -O2 "*|*" -O3 "*|*" -Os "*|*" -Ofast "*|*" -Oz "*)
+-                CFLAGS="$CFLAGS -D_FORTIFY_SOURCE=2"
+-                ;;
+-        esac
++                case " $CPPFLAGS $CFLAGS " in
++            *FORTIFY_SOURCE=*) ;;
++            *)
++                case " $CFLAGS " in
++            *" -O "*|*" -O1 "*|*" -O2 "*|*" -O3 "*|*" -Os "*|*" -Ofast "*|*" -Oz "*)
++                CFLAGS="$CFLAGS -D_FORTIFY_SOURCE=2"
++                ;;
++                esac
++                ;;
++        esac
