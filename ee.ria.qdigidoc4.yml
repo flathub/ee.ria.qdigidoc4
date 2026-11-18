@@ -72,8 +72,8 @@ modules:
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/open-eid/libdigidocpp/archive/refs/tags/v4.5.1.tar.gz
-        sha256: 536ae93e95a19314645703e02c3391cfe52c590526b70daceffa4185eac5a98c
+        url: https://github.com/open-eid/libdigidocpp/archive/refs/tags/v4.5.2.tar.gz
+        sha256: eba56766d825917370025399c274c168d1ee173bca6b0b6abcc1f260cb72493f
         x-checker-data:
           type: json
           is-important: true
@@ -124,8 +124,8 @@ modules:
       - /sbin
     sources:
       - type: archive
-        url: https://github.com/LudovicRousseau/PCSC/archive/refs/tags/2.5.3.tar.gz
-        sha256: c00ea09732bb46feb03eccc70d513c3b7922ea61954cfd0c0e691702bf1d579f
+        url: https://github.com/LudovicRousseau/PCSC/archive/refs/tags/2.5.4.tar.gz
+        sha256: 86f5563806bd8d3992dd2d832e95f58c3eb7d6f78a9da7f12bbac304b1ec71d3
         x-checker-data:
           type: json
           is-important: true
@@ -162,8 +162,8 @@ modules:
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/open-eid/DigiDoc4-Client/releases/download/v4.11.1/qdigidoc4-4.11.1.tar.gz
-        sha256: 16d7c37ef14cd15bab8d1bda3e7eb5e78ff29130f983490678aa6cc42d828977
+        url: https://github.com/open-eid/DigiDoc4-Client/releases/download/v4.11.2/qdigidoc4-4.11.2.tar.gz
+        sha256: 423c58798008ab418b9e0dbb967f7cb4999543e4179593d459570658753ad1f8
         x-checker-data:
           type: json
           is-main-source: true
@@ -179,7 +179,7 @@ modules:
       # https://github.com/open-eid/DigiDoc4-Client/wiki/DeveloperTips#building-in-sandboxed-environment
       - type: file
         url: https://ec.europa.eu/tools/lotl/eu-lotl.xml
-        sha256: a36d0053df1afa96c88ede817a585b3168afeba84c1984a0e6cc5642453e70e6
+        sha256: 45e0827831e07754c36e456e5e01469b1b8e793c9f29571832c397ef3bde4750
         dest: client
         dest-filename: eu-lotl.xml
         x-checker-data:
@@ -187,7 +187,7 @@ modules:
           url: https://ec.europa.eu/tools/lotl/eu-lotl.xml
       - type: file
         url: https://sr.riik.ee/tsl/estonian-tsl.xml
-        sha256: c6b7b872fadcafdd24ad772f7b6649c5c87e3aa27ea44952727ea73d2c435918
+        sha256: 0b59035b9936fbbdafa2d8b47cc6b76a0fe08f00b99375e207fbd06efe3317a4
         dest: client
         dest-filename: EE.xml
         x-checker-data:
@@ -195,7 +195,7 @@ modules:
           url: https://sr.riik.ee/tsl/estonian-tsl.xml
       - type: file
         url: https://id.eesti.ee/config.json
-        sha256: c4fff70c5ea3f3b43bdafed8a2220a6a4bc37c74f1056d5b50590227de8a38b9
+        sha256: 7f0f6d65eabef8b46a0c74e44a119a6bab27837ead2598f5ff398620f5d1fbe6
         dest: common
         dest-filename: config.json
         x-checker-data:
@@ -203,7 +203,7 @@ modules:
           url: https://id.eesti.ee/config.json
       - type: file
         url: https://id.eesti.ee/config.ecc
-        sha256: 64ed77f949ab30af36c91622098454ceb21cf83f5a6aab35a5ea25d1e71ecfe8
+        sha256: 3f95b3dc418d68d98d4d2916c5721e5160ea56c780571270acf827e1e203169f
         dest: common
         dest-filename: config.ecc
         x-checker-data:
