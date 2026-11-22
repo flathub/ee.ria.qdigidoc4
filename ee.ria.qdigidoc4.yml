@@ -158,7 +158,7 @@ modules:
           - opensc/0002-Drop-non-functional-ENABLE_AUTOSTART.patch
           - opensc/0004-esteid2018-fix.patch
 
-  - name: c
+  - name: qdigidoc4
     buildsystem: cmake-ninja
     sources:
       - type: archive
